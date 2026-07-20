@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalog Champ — Amazon Catalog Specialist Interview Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14202E;         /* deep navy ink */
+  --ink-soft:#4A5A6B;
+  --paper:#F3F6F9;       /* cool paper */
+  --card:#FFFFFF;
+  --line:#DCE4EC;
+  --tag:#FF9900;         /* catalog orange — used sparingly */
+  --tag-soft:#FFF3E0;
+  --teal:#007185;        /* link teal */
+  --teal-soft:#E3F2F5;
+  --green:#1E7F4F;
+  --green-soft:#E4F3EB;
+  --violet:#5A4FCF;
+  --violet-soft:#ECEAFB;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(20,32,46,.06),0 6px 18px rgba(20,32,46,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;font-size:16px}
+h1,h2,h3,.disp{font-family:'Bricolage Grotesque','Inter',sans-serif}
+
+/* ---------- header ---------- */
+header{background:var(--ink);color:#fff;padding:28px 20px 92px;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;inset:auto -10% -55% -10%;height:120px;background:var(--paper);border-radius:50% 50% 0 0}
+.hwrap{max-width:980px;margin:0 auto;position:relative;z-index:2}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.brand .box{width:34px;height:34px;border-radius:8px;background:var(--tag);display:grid;place-items:center;font-family:'Bricolage Grotesque';font-weight:800;color:var(--ink);font-size:18px}
+.brand span{font-weight:700;letter-spacing:.4px}
+header h1{font-size:clamp(1.7rem,5vw,2.7rem);font-weight:800;line-height:1.15;max-width:640px}
+header h1 em{font-style:normal;color:var(--tag)}
+header p.sub{margin-top:12px;color:#B9C6D2;max-width:560px;font-size:.95rem}
+.progress-pill{margin-top:20px;display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:8px 16px;border-radius:999px;font-size:.85rem}
+.progress-pill b{color:var(--tag)}
+
+/* ---------- tabs ---------- */
+nav.tabs{max-width:980px;margin:-58px auto 0;padding:0 16px;position:relative;z-index:5}
+.tabbar{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:6px;box-shadow:var(--shadow);overflow-x:auto;scrollbar-width:none}
+.tabbar::-webkit-scrollbar{display:none}
+.tabbar button{flex:1 0 auto;border:0;background:transparent;font-family:'Inter';font-weight:600;font-size:.86rem;color:var(--ink-soft);padding:10px 14px;border-radius:10px;cursor:pointer;white-space:nowrap;transition:.18s}
+.tabbar button:hover{color:var(--ink)}
+.tabbar button.active{background:var(--ink);color:#fff}
+.tabbar button:focus-visible{outline:3px solid var(--tag);outline-offset:2px}
+
+main{max-width:980px;margin:0 auto;padding:26px 16px 70px}
+section.panel{display:none;animation:fade .35s ease}
+section.panel.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.panel>h2{font-size:1.5rem;font-weight:800;margin-bottom:4px}
+.panel>.lede{color:var(--ink-soft);font-size:.95rem;margin-bottom:22px;max-width:640px}
+
+/* ---------- generic card ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
+
+/* ---------- roadmap ---------- */
+.weeks{display:grid;gap:16px}
+@media(min-width:760px){.weeks{grid-template-columns:1fr 1fr 1fr}}
+.week{border-top:5px solid var(--tag)}
+.week:nth-child(2){border-top-color:var(--teal)}
+.week:nth-child(3){border-top-color:var(--violet)}
+.week h3{font-size:1.05rem;font-weight:800;margin-bottom:2px}
+.week .goal{font-size:.8rem;color:var(--ink-soft);margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.week ul{list-style:none}
+.week li{padding:7px 0 7px 26px;position:relative;font-size:.9rem;border-bottom:1px dashed var(--line)}
+.week li:last-child{border-bottom:0}
+.week li::before{content:"✦";position:absolute;left:4px;color:var(--tag);font-size:.75rem;top:9px}
+.week:nth-child(2) li::before{color:var(--teal)}
+.week:nth-child(3) li::before{color:var(--violet)}
+.daily{background:var(--tag-soft);border:1px solid #F5DDB0;margin-top:16px}
+.daily h3{font-size:1rem;margin-bottom:6px}
+.daily p{font-size:.9rem}
+
+/* ---------- rounds stepper ---------- */
+.steps{position:relative;padding-left:34px}
+.steps::before{content:"";position:absolute;left:13px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.step{position:relative;margin-bottom:14px}
+.step .dot{position:absolute;left:-34px;top:14px;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.8rem;font-family:'Bricolage Grotesque';z-index:2}
+.step .card{margin-bottom:0;cursor:pointer}
+.step h3{font-size:1rem;font-weight:800;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.step h3 .chev{transition:.25s;color:var(--ink-soft);flex-shrink:0}
+.step.open h3 .chev{transform:rotate(180deg)}
+.step .body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.step.open .body{max-height:600px}
+.step .body-inner{padding-top:10px;font-size:.9rem;color:var(--ink-soft)}
+.step .body-inner b{color:var(--ink)}
+.killer{display:inline-block;background:#FDECEC;color:#B3261E;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:999px;margin-left:6px;vertical-align:middle}
+
+/* ---------- Q&A bank ---------- */
+.toolrow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.search{flex:1 1 220px;position:relative}
+.search input{width:100%;padding:11px 14px 11px 38px;border:1.5px solid var(--line);border-radius:10px;font:inherit;font-size:.92rem;background:var(--card)}
+.search input:focus{outline:none;border-color:var(--teal)}
+.search::before{content:"🔍";position:absolute;left:12px;top:10px;font-size:.85rem;opacity:.6}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-size:.8rem;font-weight:600;color:var(--ink-soft);cursor:pointer;transition:.15s}
+.chip:hover{border-color:var(--ink)}
+.chip.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.qcount{font-size:.82rem;color:var(--ink-soft);margin-bottom:12px}
+
+.q{border-left:5px solid var(--line);transition:border-color .2s;padding:16px 18px}
+.q.learned{border-left-color:var(--green)}
+.q .qtop{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.badge{font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:6px;letter-spacing:.3px;text-transform:uppercase}
+.b-real{background:var(--tag-soft);color:#9A5B00}
+.b-world{background:var(--teal-soft);color:var(--teal)}
+.b-extra{background:var(--violet-soft);color:var(--violet)}
+.b-cat{background:#EEF2F6;color:var(--ink-soft)}
+.q h3{font-size:.98rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.q h3 .chev{color:var(--ink-soft);transition:.25s;margin-top:3px;flex-shrink:0}
+.q.open h3 .chev{transform:rotate(180deg)}
+.q .ans{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.q.open .ans{max-height:1200px}
+.q .ans-inner{padding-top:12px;font-size:.9rem}
+.q .ans-inner .tip{margin-top:10px;background:var(--teal-soft);border-radius:8px;padding:10px 12px;font-size:.83rem;color:#075E6E}
+.q .ans-inner .tip b{color:#054752}
+.q .star b{color:var(--teal)}
+.markbtn{margin-top:12px;border:1.5px solid var(--line);background:var(--card);padding:7px 14px;border-radius:8px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer;color:var(--ink-soft);transition:.15s}
+.markbtn:hover{border-color:var(--green);color:var(--green)}
+.q.learned .markbtn{background:var(--green-soft);border-color:var(--green);color:var(--green)}
+.meter{height:8px;background:#E4EAF0;border-radius:999px;overflow:hidden;margin:4px 0 18px}
+.meter div{height:100%;width:0%;background:linear-gradient(90deg,var(--tag),var(--green));transition:width .5s ease;border-radius:999px}
+
+/* ---------- practice ---------- */
+.flash{max-width:640px;margin:0 auto;text-align:center}
+.flashcard{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:34px 26px;min-height:220px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.flashcard .fc-tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--tag);color:var(--ink);font-weight:800;font-size:.72rem;padding:4px 14px;border-radius:999px;letter-spacing:.5px;text-transform:uppercase;font-family:'Bricolage Grotesque'}
+.flashcard h3{font-size:1.15rem;font-weight:800;margin-bottom:10px}
+.flashcard .fans{display:none;text-align:left;font-size:.9rem;margin-top:14px;border-top:1px dashed var(--line);padding-top:14px}
+.flashcard.revealed .fans{display:block;animation:fade .3s}
+.fbtns{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.btn{border:0;font:inherit;font-weight:700;font-size:.88rem;padding:12px 22px;border-radius:11px;cursor:pointer;transition:.15s}
+.btn:focus-visible{outline:3px solid var(--tag);outline-offset:2px}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:#25384C}
+.btn-line{background:var(--card);border:1.5px solid var(--line);color:var(--ink)}
+.btn-line:hover{border-color:var(--ink)}
+.btn-green{background:var(--green);color:#fff}
+.btn-orange{background:var(--tag);color:var(--ink)}
+.score{margin-top:16px;font-size:.85rem;color:var(--ink-soft)}
+.score b{color:var(--ink)}
+.timerbar{height:6px;background:#E4EAF0;border-radius:999px;margin-top:22px;overflow:hidden;display:none}
+.timerbar.on{display:block}
+.timerbar div{height:100%;background:var(--tag);width:100%}
+.jamzone{margin-top:34px;text-align:center}
+.jamtopic{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.25rem;background:var(--violet-soft);color:var(--violet);border-radius:14px;padding:20px;margin:14px 0}
+.timer-display{font-family:'Bricolage Grotesque';font-weight:800;font-size:2.4rem;letter-spacing:1px}
+
+/* ---------- resources ---------- */
+.bloggrid{display:grid;gap:14px}
+@media(min-width:700px){.bloggrid{grid-template-columns:1fr 1fr}}
+a.blog{display:block;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:.18s}
+a.blog:hover{transform:translateY(-3px);border-color:var(--teal)}
+a.blog .src{font-size:.7rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.6px}
+a.blog h3{font-size:.97rem;font-weight:700;margin:5px 0 5px}
+a.blog p{font-size:.83rem;color:var(--ink-soft)}
+a.blog .go{display:inline-block;margin-top:9px;font-size:.8rem;font-weight:700;color:var(--teal)}
+.warn{background:#FDECEC;border:1px solid #F2C4C0;border-radius:var(--radius);padding:16px 18px;font-size:.88rem;margin-top:18px}
+.warn b{color:#B3261E}
+
+/* ---------- pills / quiz / certificate ---------- */
+.pillrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.pillrow .progress-pill{margin-top:0;cursor:default}
+#namePill{cursor:pointer}
+#namePill:hover{background:rgba(255,255,255,.16)}
+.quizcard{max-width:640px;margin:0 auto}
+.quizcard .qnum{font-size:.75rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.quizcard h3{font-size:1.1rem;font-weight:800;margin-bottom:16px}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:11px;padding:13px 16px;font:inherit;font-size:.92rem;font-weight:500;cursor:pointer;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.correct{background:var(--green-soft);border-color:var(--green);color:var(--green);font-weight:700}
+.opt.wrong{background:#FDECEC;border-color:#B3261E;color:#B3261E}
+.opt:disabled{cursor:default;opacity:.85}
+.quizexp{margin-top:14px;background:var(--teal-soft);border-radius:10px;padding:12px 14px;font-size:.86rem;color:#075E6E;display:none}
+.quizexp.show{display:block;animation:fade .3s}
+.quizscore{text-align:center;padding:10px 0}
+.quizscore .big{font-family:'Bricolage Grotesque';font-weight:800;font-size:3rem}
+.certcard{background:linear-gradient(135deg,#FFF9EE,#FFF3E0);border:1.5px solid #F0D9A8;text-align:center}
+.certcard h3{font-size:1.05rem;font-weight:800;margin-bottom:6px}
+.certcard p{font-size:.87rem;color:var(--ink-soft);margin-bottom:14px}
+.certcard .btn:disabled{opacity:.5;cursor:not-allowed}
+/* ---------- floating visit counter (right side) ---------- */
+.floatcount{position:fixed;right:0;top:45%;z-index:50;background:var(--ink);color:#fff;border-radius:14px 0 0 14px;padding:12px 14px 12px 16px;box-shadow:-4px 4px 16px rgba(20,32,46,.25);display:none;text-align:center;border-left:4px solid var(--tag)}
+.floatcount .fc-ico{font-size:1.15rem}
+.floatcount .fc-num{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.15rem;color:var(--tag);line-height:1.1}
+.floatcount .fc-lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.6px;color:#B9C6D2}
+/* ---------- question of the day ---------- */
+.qotd{border-left:5px solid var(--violet);background:linear-gradient(135deg,#fff,#F5F3FE)}
+.qotd .eyebrow{font-size:.7rem;font-weight:800;color:var(--violet);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.qotd h3{font-size:1rem;font-weight:800;margin-bottom:10px}
+.qotd .qotd-ans{display:none;font-size:.9rem;margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.qotd.revealed .qotd-ans{display:block;animation:fade .3s}
+/* ---------- confetti ---------- */
+.confetti{position:fixed;top:-20px;z-index:99;font-size:1.2rem;pointer-events:none;animation:cfall linear forwards}
+@keyframes cfall{to{transform:translateY(110vh) rotate(720deg);opacity:.4}}
+/* ---------- chip counts ---------- */
+.chip small{opacity:.7;font-weight:600;margin-left:4px}
+footer{background:var(--ink);color:#8FA1B3;text-align:center;padding:26px 16px;font-size:.8rem}
+footer b{color:#fff}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <div class="brand"><div class="box">C</div><span>CATALOG CHAMP</span></div>
+    <h1>Crack the <em>Amazon Catalog Specialist</em> interview — round by round.</h1>
+    <p class="sub">Real questions collected from candidates in India and around the world, with ready model answers, a 3-week roadmap, and a practice mode. Built for freshers.</p>
+    <div class="pillrow">
+      <div class="progress-pill">📦 Mastered: <b id="pillCount">0</b>&nbsp;/ <span id="pillTotal">0</span></div>
+      <div class="progress-pill" id="streakPill">🔥 Streak: <b id="streakCount">1</b> day</div>
+      <div class="progress-pill" id="namePill" title="Click to set your name">👤 <b id="studentName">Set your name</b></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabbar" role="tablist">
+    <button class="active" data-tab="roadmap" role="tab">🗺️ Roadmap</button>
+    <button data-tab="rounds" role="tab">🪜 Interview Rounds</button>
+    <button data-tab="bank" role="tab">💬 Q&amp;A Bank</button>
+    <button data-tab="practice" role="tab">🎯 Practice Mode</button>
+    <button data-tab="quiz" role="tab">🧮 Aptitude Quiz</button>
+    <button data-tab="resources" role="tab">📚 Blogs &amp; Resources</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ================= ROADMAP ================= -->
+<section id="roadmap" class="panel show">
+  <div class="card qotd" id="qotdCard">
+    <div class="eyebrow">⭐ Question of the Day</div>
+    <h3 id="qotdQ">Loading…</h3>
+    <button class="btn btn-line" id="qotdBtn" style="padding:9px 18px;font-size:.83rem">👁 Reveal answer</button>
+    <div class="qotd-ans" id="qotdA"></div>
+  </div>
+  <h2>3-Week Training Roadmap</h2>
+  <p class="lede">Follow this plan day by day. Weeks build on each other: foundation → interview skills → full mock simulations.</p>
+  <div class="weeks">
+    <div class="card week">
+      <h3>Week 1 · Foundation</h3>
+      <div class="goal">Spoken English + role knowledge + aptitude</div>
+      <ul>
+        <li>Daily 2-minute JAM practice (45 min)</li>
+        <li>Learn the Catalog Specialist role — write it in your own words</li>
+        <li>Learn 4 Leadership Principles with one life example each</li>
+        <li>Aptitude drill: percentages, ratios, reasoning, verbal (1 hr/day)</li>
+        <li>Grammar clinic: tenses, articles, subject-verb agreement</li>
+        <li>Typing practice starts — target 30 WPM, 95% accuracy</li>
+        <li>Excel basics: sort, filter, duplicates, VLOOKUP, pivot intro</li>
+        <li>Day 7 test: JAM + aptitude set + typing</li>
+      </ul>
+    </div>
+    <div class="card week">
+      <h3>Week 2 · Interview Skills</h3>
+      <div class="goal">STAR stories + writing + scenarios</div>
+      <ul>
+        <li>Learn STAR method; write 3 personal stories (challenge, mistake, deadline)</li>
+        <li>150-word essay practice with correction</li>
+        <li>HR question drill: intro, why Amazon, strengths &amp; weaknesses</li>
+        <li>Catalog scenario training: discrepancies, wrong attributes, prioritization</li>
+        <li>Puzzle practice — learn to "think aloud"</li>
+        <li>Versant-style speaking: repeat, answer fast, read aloud</li>
+        <li>Day 14 review: essays + STAR answers checked 1-on-1</li>
+      </ul>
+    </div>
+    <div class="card week">
+      <h3>Week 3 · Mock Interviews</h3>
+      <div class="goal">Full simulation &amp; polish</div>
+      <ul>
+        <li>Mock JAM in group setting (with elimination pressure)</li>
+        <li>Timed aptitude test — 40 questions</li>
+        <li>Essay + typing + Versant simulation</li>
+        <li>Mock technical / ops interview</li>
+        <li>Mock manager + HR interview (record &amp; review body language)</li>
+        <li>Feedback day: personal scorecard + 3 improvement points</li>
+        <li>Day 21: all rounds back-to-back, exactly like the real one-day drive</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card daily">
+    <h3>⚡ Daily non-negotiables (all 21 days)</h3>
+    <p>45 min JAM speaking · 30 min typing · 30 min aptitude. Consistency beats intensity — small daily reps are what remove hesitation in the real interview.</p>
+  </div>
+</section>
+
+<!-- ================= ROUNDS ================= -->
+<section id="rounds" class="panel">
+  <h2>The Interview, Step by Step</h2>
+  <p class="lede">Based on real candidate reports the process usually runs in this order — often completed in a single day. Tap each step to see what is tested and how to prepare.</p>
+  <div class="steps" id="stepList">
+    <div class="step"><div class="dot">1</div><div class="card">
+      <h3>JAM / Extempore / Group Discussion <span class="killer">Heavy elimination</span><span class="chev">▾</span></h3>
+      <div class="body"><div class="body-inner">Speak 2–5 minutes on a given topic, sometimes choosing from a topic list in a group. One candidate reported over half the group was eliminated here.<br><br><b>They check:</b> fluency, confidence, structured thinking.<br><b>Winning frame:</b> one opening line → 2–3 points → one closing line. No long pauses, no mixing Hindi mid-sentence.</div></div>
+    </div></div>
+    <div class="step"><div class="dot">2</div><div class="card">
+      <h3>Aptitude / Online Test <span class="chev">▾</span></h3>
+      <div class="body"><div class="body-inner">Typically ~40 easy questions: 20 English (grammar, vocabulary, comprehension) + 20 reasoning (logical, non-verbal, percentages, ratios, data interpretation). Some candidates got a Watson Glaser critical-thinking test or scenario MCQs about cataloging instead.<br><br><b>They check:</b> basics under time pressure. <b>Prep:</b> timed IndiaBix-style sets — speed matters more than difficulty.</div></div>
+    </div></div>
+    <div class="step"><div class="dot">3</div><div class="card">
+      <h3>Versant Test — Speaking + Typing <span class="chev">▾</span></h3>
+      <div class="body"><div class="body-inner">A computer-based English test: repeat sentences, answer short questions, read passages aloud, respond to prompts — plus a typing test of moderate difficulty.<br><br><b>They check:</b> pronunciation, fluency, listening, typing speed/accuracy. <b>Prep:</b> practice free Versant samples online; speak clearly at natural speed, don't rush.</div></div>
+    </div></div>
+    <div class="step"><div class="dot">4</div><div class="card">
+      <h3>Essay Writing <span class="chev">▾</span></h3>
+      <div class="body"><div class="body-inner">A short essay (~150 words, sometimes up to 2 pages) on one of 2–3 topics.<br><br><b>They check:</b> written grammar, spelling, organization. <b>Fixed structure to use:</b> 2-line intro → 2 short body paragraphs (one point + one example each) → 2-line conclusion. No SMS spellings.</div></div>
+    </div></div>
+    <div class="step"><div class="dot">5</div><div class="card">
+      <h3>Technical / Operations Interview <span class="chev">▾</span></h3>
+      <div class="body"><div class="body-inner">Questions on the Catalog Specialist role, data handling, Excel/SQL, and catalog scenarios — wrong attributes, discrepancies, ambiguous products.<br><br><b>They check:</b> role understanding, attention to detail, structured problem solving. All these questions are in the Q&amp;A Bank → <b>Role &amp; Technical</b> and <b>Scenarios</b> categories.</div></div>
+    </div></div>
+    <div class="step"><div class="dot">6</div><div class="card">
+      <h3>Manager / Behavioral Interview <span class="chev">▾</span></h3>
+      <div class="body"><div class="body-inner">STAR-based questions — challenges, conflicts, deadlines, prioritization — plus puzzles in some interviews (tennis balls in a car, organizing an unlabeled library).<br><br><b>They check:</b> Leadership Principles fit, calm thinking, communication. <b>Rule for puzzles:</b> your approach matters, not the exact answer — think aloud.</div></div>
+    </div></div>
+    <div class="step"><div class="dot">7</div><div class="card">
+      <h3>HR Round <span class="chev">▾</span></h3>
+      <div class="body"><div class="body-inner">Career goals, why Amazon, salary expectation, culture fit, shift/relocation willingness.<br><br><b>They check:</b> motivation, stability, honesty. Never criticize a previous college/employer, and never bluff — "I'm not sure, but my approach would be…" is a respected answer.</div></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ================= Q&A BANK ================= -->
+<section id="bank" class="panel">
+  <h2>Question &amp; Answer Bank</h2>
+  <p class="lede">Tap a question to reveal the model answer. Mark questions as ✔ Mastered to track progress. Badges show where each question comes from: <span class="badge b-real">India · real</span> reported by Indian candidates, <span class="badge b-world">Global · real</span> asked worldwide, <span class="badge b-extra">Extra practice</span> written for deeper prep.</p>
+  <div class="meter"><div id="meterFill"></div></div>
+  <div class="toolrow">
+    <div class="search"><input id="qsearch" type="text" placeholder="Search questions… (e.g. VLOOKUP, deadline, weakness)" aria-label="Search questions"></div>
+  </div>
+  <div class="chips" id="chipRow" style="margin-bottom:14px"></div>
+  <div class="qcount" id="qcount"></div>
+  <div id="qlist"></div>
+  <div class="card certcard">
+    <h3>🏆 Completion Certificate</h3>
+    <p id="certMsg">Master at least 80% of the questions to unlock your personalized certificate.</p>
+    <button class="btn btn-orange" id="btnCert" disabled>Download my certificate</button>
+  </div>
+</section>
+
+<!-- ================= QUIZ ================= -->
+<section id="quiz" class="panel">
+  <h2>Aptitude Mini-Quiz</h2>
+  <p class="lede">10 questions in the same style as the real aptitude round — quantitative, reasoning, English, and role knowledge. Instant feedback after every answer.</p>
+  <div class="card quizcard" id="quizBox">
+    <div class="qnum" id="quizNum"></div>
+    <h3 id="quizQ">Press Start to begin.</h3>
+    <div class="opts" id="quizOpts"></div>
+    <div class="quizexp" id="quizExp"></div>
+    <div class="fbtns" style="margin-top:18px">
+      <button class="btn btn-dark" id="btnQuizStart">▶ Start quiz</button>
+      <button class="btn btn-line" id="btnQuizNext" style="display:none">Next question →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRACTICE ================= -->
+<section id="practice" class="panel">
+  <h2>Practice Mode</h2>
+  <p class="lede">Random-question flashcards, just like a real interviewer. Answer aloud first, then reveal the model answer and grade yourself honestly.</p>
+  <div class="flash">
+    <div class="flashcard" id="flashcard">
+      <div class="fc-tag" id="fcCat">Ready?</div>
+      <h3 id="fcQ">Press "New question" to start your mock interview.</h3>
+      <div class="fans" id="fcA"></div>
+    </div>
+    <div class="fbtns">
+      <button class="btn btn-dark" id="btnNew">🎲 New question</button>
+      <button class="btn btn-line" id="btnReveal" disabled>👁 Reveal answer</button>
+    </div>
+    <div class="fbtns" id="gradeBtns" style="display:none">
+      <button class="btn btn-green" id="btnGood">😎 I nailed it</button>
+      <button class="btn btn-line" id="btnBad">😅 Need more practice</button>
+    </div>
+    <div class="score" id="scoreLine">Session score: <b>0</b> nailed · <b>0</b> to revise</div>
+  </div>
+
+  <div class="jamzone">
+    <h2 style="font-size:1.25rem">🎤 JAM Trainer</h2>
+    <p class="lede" style="margin:6px auto 0;max-width:520px">Get a random topic and speak for 2 minutes without stopping. Frame: opening line → 2–3 points → closing line.</p>
+    <div class="jamtopic" id="jamTopic">Press the button for a topic</div>
+    <div class="timer-display" id="jamClock">02:00</div>
+    <div class="fbtns">
+      <button class="btn btn-orange" id="btnJam">🎲 Random topic</button>
+      <button class="btn btn-dark" id="btnJamStart">▶ Start 2-min timer</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESOURCES ================= -->
+<section id="resources" class="panel">
+  <h2>Blogs &amp; Resources</h2>
+  <p class="lede">The best pages found on the web — real candidate experiences, question lists, and practice tools. Open them for extra reading.</p>
+  <div class="bloggrid">
+    <a class="blog" href="https://discuss.boardinfinity.com/t/amazon-catalog-specialist-india-interview-questions-experience-guide/22853" target="_blank" rel="noopener"><span class="src">Board Infinity</span><h3>Amazon Catalog Specialist India — 20+ real interview experiences</h3><p>The richest source: round-by-round candidate stories with the exact questions they were asked and what worked.</p><span class="go">Read experiences →</span></a>
+    <a class="blog" href="https://www.glassdoor.co.in/Interview/Amazon-Catalog-Specialist-Interview-Questions-EI_IE6036.0,6_KO7,25.htm" target="_blank" rel="noopener"><span class="src">Glassdoor</span><h3>Catalog Specialist interview reviews (India + worldwide)</h3><p>Interview difficulty ratings, timelines, and anonymously posted questions from real candidates.</p><span class="go">Browse questions →</span></a>
+    <a class="blog" href="https://www.glassdoor.com.hk/Interview/Amazon-Catalog-Associate-Interview-Questions-EI_IE6036.0,6_KO7,24_IP3.htm" target="_blank" rel="noopener"><span class="src">Glassdoor</span><h3>Catalog Associate experiences — Chennai &amp; Bengaluru</h3><p>Detailed 5-round reports: extempore, aptitude, essay, and two manager interviews, with candidate tips.</p><span class="go">See the 5 rounds →</span></a>
+    <a class="blog" href="https://www.quora.com/How-can-I-prepare-for-an-Amazon-catalogue-specialist-interview" target="_blank" rel="noopener"><span class="src">Quora</span><h3>How to prepare for the catalogue specialist interview</h3><p>Answers from people who cleared it — including the warning for engineering grads about the "why non-technical role" trap.</p><span class="go">Read tips →</span></a>
+    <a class="blog" href="https://www.geeksforgeeks.org/amazon-catalogue-associate-interview-experience/" target="_blank" rel="noopener"><span class="src">GeeksforGeeks</span><h3>Catalogue Associate interview experience (2024)</h3><p>A recent two-round journey: what was asked in round one and how the second round went deeper into the role.</p><span class="go">Read the story →</span></a>
+    <a class="blog" href="https://www.ziprecruiter.com/career/job-interview-question-answers/amazon-catalog-specialist" target="_blank" rel="noopener"><span class="src">ZipRecruiter</span><h3>15 Amazon Catalog Specialist questions &amp; answers</h3><p>A global question list with reasons why employers ask each one — good for understanding interviewer intent.</p><span class="go">Study the list →</span></a>
+    <a class="blog" href="https://www.multiplymii.com/interview-repository/catalog-specialist" target="_blank" rel="noopener"><span class="src">MultiplyMii</span><h3>Catalog Specialist questions employers use worldwide</h3><p>See the interview from the hiring side: technical, situational and collaboration questions recruiters are told to ask.</p><span class="go">Think like a recruiter →</span></a>
+    <a class="blog" href="https://www.amazon.jobs/content/en/our-workplace/leadership-principles" target="_blank" rel="noopener"><span class="src">Amazon (official)</span><h3>Amazon's Leadership Principles</h3><p>The official page. Focus on Customer Obsession, Ownership, Dive Deep and Deliver Results — map one real story to each.</p><span class="go">Learn the principles →</span></a>
+    <a class="blog" href="https://www.indiabix.com" target="_blank" rel="noopener"><span class="src">Practice tool</span><h3>IndiaBix — aptitude &amp; verbal practice</h3><p>Free timed sets for percentages, ratios, logical and non-verbal reasoning — exactly the aptitude round syllabus.</p><span class="go">Start practicing →</span></a>
+    <a class="blog" href="https://www.typing.com" target="_blank" rel="noopener"><span class="src">Practice tool</span><h3>Typing.com — free typing trainer</h3><p>Build to 30+ WPM with 95% accuracy before the Versant typing test. 30 minutes daily is enough.</p><span class="go">Test your speed →</span></a>
+    <a class="blog" href="https://www.amazon.jobs" target="_blank" rel="noopener"><span class="src">Amazon (official)</span><h3>Amazon Jobs — the only official application portal</h3><p>Always cross-check any recruiter message against openings listed here.</p><span class="go">Search openings →</span></a>
+    <a class="blog" href="https://www.malwarebytes.com/blog/scams/2026/06/watch-out-for-high-paying-low-effort-amazon-job-texts" target="_blank" rel="noopener"><span class="src">Malwarebytes</span><h3>Spot fake "Amazon hiring" messages</h3><p>How task scams impersonate Amazon recruiters — every job seeker should read this before replying to any offer.</p><span class="go">Stay safe →</span></a>
+  </div>
+  <div class="warn"><b>⚠️ Safety rule for every student:</b> legitimate recruiters — including genuine staffing agencies like Russell Tobin — <b>never ask for money</b>, never hire over WhatsApp-only chats, and always use official email domains. Any "registration fee", "training deposit" or task-payment request = scam. Verify openings on the official Amazon Jobs portal.</div>
+</section>
+
+</main>
+
+<div class="floatcount" id="visitPill" title="Total students who opened this site">
+  <div class="fc-ico">👥</div>
+  <div class="fc-num" id="visitCount">–</div>
+  <div class="fc-lbl">Students<br>Visited</div>
+</div>
+
+<footer>Made for interview training · Questions sourced from real candidate experiences on <b>Board Infinity, Glassdoor, Quora, GeeksforGeeks, ZipRecruiter &amp; MultiplyMii</b> · Adapt every model answer to the student's real background.</footer>
+
+<script>
+/* =========================================================
+   QUESTION DATA
+   src: real  = reported by Indian candidates
+        world = asked globally for the same job
+        extra = added for deeper practice
+========================================================= */
+const QA=[
+/* ---------- HR & Introduction ---------- */
+{c:"HR & Intro",src:"real",q:"Tell me about yourself.",
+a:`"Good morning. My name is ______, and I completed my ______ from ______. During my studies I built strong computer skills — especially MS Excel and data entry — and I enjoy work that needs accuracy and attention to detail. I've also worked hard on my English communication through daily practice. I'm a patient, organized person who likes completing tasks correctly the first time. This Catalog Specialist role matches my strengths: working carefully with product data and helping customers get correct information."`,
+t:"60–90 seconds max. Name → education → 2 relevant skills → 1 trait → link to role. No family history or school marks."},
+{c:"HR & Intro",src:"real",q:"Why Amazon? / Why are you interested in this role?",
+a:`"Amazon is the most customer-focused company in the world, and its first leadership principle — Customer Obsession — matches how I like to work. Amazon also gives freshers real responsibility and a clear growth path. As a Catalog Specialist I would directly help millions of customers find accurate product information, so my daily work has real impact. That mix of learning, growth and impact is why I want to start my career here."`,
+t:"Candidates who cleared connected this answer to Leadership Principles, especially Customer Obsession."},
+{c:"HR & Intro",src:"real",q:"Why a non-technical role? (asked to engineering graduates)",
+a:`"My degree gave me analytical thinking and comfort with data and tools like Excel — and this role uses exactly those skills daily. Catalog work means analyzing data, finding errors and solving problems in a structured way. I chose this role deliberately: I enjoy detail-oriented, process-driven work more than coding, and I see e-commerce operations as a strong long-term career."`,
+t:"⚠️ Trap question. Never say it's a backup, and don't oversell technical projects — candidates report that works against you here."},
+{c:"HR & Intro",src:"real",q:"What are your strengths and weaknesses?",
+a:`"My biggest strength is attention to detail — in college I was the one who caught mistakes in group reports before submission. I'm also consistent: same accuracy in the eighth hour as the first. My weakness: earlier I spent too long perfecting small things, which made me slow. I've fixed this by setting time limits per task and doing one final check instead of repeated checks."`,
+t:"Weakness must be real, small, and paired with the improvement. Banned: 'I'm a perfectionist' alone, 'I work too hard', 'no weaknesses'."},
+{c:"HR & Intro",src:"real",q:"What are your hobbies? What trainings or certifications did you do during graduation?",
+a:`"I enjoy reading about technology and e-commerce, and I play cricket on weekends, which taught me teamwork. During graduation I completed a certification in MS Excel [use your real one], which is directly useful for this role."`,
+t:"Prepare your own TRUE version. Any certificate you mention WILL get follow-up questions — no fake claims."},
+{c:"HR & Intro",src:"real",q:"What are your career goals? Where do you see yourself in a few years?",
+a:`"Short term, I want to become an expert Catalog Specialist — someone the team trusts for accuracy and speed. In 3–4 years I'd like to grow into a senior or quality/team-lead role within Amazon's catalog or operations team. My goal is to grow within the company, not to keep switching jobs."`},
+{c:"HR & Intro",src:"real",q:"What are your salary expectations?",
+a:`"As a fresher, my priority is the learning and the opportunity. I'm comfortable with the standard salary offered for this position as per company norms."`},
+{c:"HR & Intro",src:"real",q:"How do you expect this role to be? What are its key challenges?",
+a:`"I expect to create and correct product listings, check data quality, and follow SOPs with high accuracy under daily targets. The key challenges: maintaining accuracy while meeting volume targets, handling ambiguous product info, and staying focused during repetitive work. I'm prepared — I'm comfortable with routine work and I know accuracy targets are non-negotiable at Amazon."`},
+{c:"HR & Intro",src:"world",q:"What motivated you to apply, and how do your skills match the requirements of a Catalog Specialist?",
+a:`"Two things motivated me: I enjoy detailed data work, and I wanted a role where accuracy directly helps customers. My skills match on three points — strong Excel for handling product data, careful reading habits for catching listing errors, and good written English for creating clean product content. The job description asks for attention to detail and process discipline, and those are exactly the strengths my professors and teammates know me for."`,
+t:"Asked to a real candidate in Amazon's Amsterdam office — same job, worldwide. Structure: motivation (2 reasons) + skills mapped to the JD (3 points)."},
+
+/* ---------- Role & Technical ---------- */
+{c:"Role & Technical",src:"real",q:"Explain the role of a Catalog Specialist in your own words.",
+a:`"A Catalog Specialist manages the product information customers see on Amazon — titles, descriptions, images, prices, brands and categories. The job is to create new listings, fix errors, remove duplicates, and make sure every product follows Amazon's style guidelines. If catalog data is wrong, customers buy the wrong product, return it, and lose trust — so this role directly protects the customer experience and the seller's business."`,
+t:"An interviewer will reject anyone who can't explain the job they applied for. Practice until it flows naturally."},
+{c:"Role & Technical",src:"real",q:"How would you handle discrepancies in product listings?",
+a:`"First, identify exactly what's mismatched — say the title says 500ml but the image shows 1 litre. Second, verify the correct info from a trusted source: manufacturer data, the seller's original input, or the SOP. Third, correct the listing per the style guide. Finally, check whether the same error exists in similar listings so the root cause is fixed, not just one product. If unsure, I escalate to my lead instead of guessing."`,
+t:"The candidate who cleared broke the problem into steps and used data to verify — copy that structure."},
+{c:"Role & Technical",src:"real",q:"A product has incorrect attributes and is causing customer complaints. How would you rectify it?",
+a:`"Complaints mean customers are being hurt right now — Customer Obsession makes this top priority. I'd verify the correct attributes from reliable sources, correct the listing immediately so no new customer is misled, then check the complaint history to confirm my fix solves the exact confusion. Last, I'd flag it to the team to check whether other products from the same seller carry the same error."`},
+{c:"Role & Technical",src:"real",q:"How would you categorize a product with ambiguous details?",
+a:`"Gather every clue — images, brand, similar catalog products, the seller's description. Compare with how similar items are categorized and follow the category style guide. If it genuinely fits two categories, choose the one where customers are most likely to search, because the catalog exists for the customer. If the ambiguity is serious, raise it to my lead with my recommendation rather than silently guessing."`},
+{c:"Role & Technical",src:"real",q:"What tools or software are you familiar with for catalog management?",
+a:`"I'm strong in MS Excel — sorting, filtering, removing duplicates, VLOOKUP and pivot tables, the core tools for checking and cleaning product data. I also understand basic SQL — SELECT, WHERE and JOIN — for pulling data from tables. I haven't used Amazon's internal catalog tools yet, but I learn software quickly, and they're built on the same data-checking logic."`,
+t:"Candidates who cleared mentioned Excel + basic SQL. Expect the follow-up: 'explain how VLOOKUP works' — see the Extra question below."},
+{c:"Role & Technical",src:"extra",q:"Follow-up: Explain how VLOOKUP works.",
+a:`"VLOOKUP searches for a value in the first column of a table and returns a value from another column in the same row. Formula: =VLOOKUP(lookup_value, table_range, column_number, FALSE). Example: if Sheet1 has product IDs and Sheet2 has IDs with prices, VLOOKUP can pull the correct price for each ID automatically — instead of matching thousands of rows by hand. FALSE means exact match, which is what catalog work needs."`,
+t:"A Glassdoor candidate said VLOOKUP knowledge was the key technical check. Practice it live in Excel before the interview."},
+{c:"Role & Technical",src:"real",q:"Describe a time you had to work with large datasets / a large amount of data.",
+a:`STAR (fresher example): "In my final-year project I collected survey data from 400+ students in Excel. The raw data had spelling differences, duplicates and blanks. I cleaned it with filters and remove-duplicates, standardized entries, and used pivot tables to summarize. It taught me that with large data, a systematic process matters more than speed — clean first, analyze second."`,
+t:"Replace with YOUR real example: college project, internship, shop billing, society records — anything true."},
+{c:"Role & Technical",src:"real",q:"How do you ensure accuracy in your work?",
+a:`"Three habits. One: follow the SOP or checklist exactly, never memory. Two: a quick self-review before submitting — especially numbers, spellings and units, where errors hide. Three: when I find an error, I ask why it happened and adjust my process so it never repeats. Accuracy isn't about being slow — it's a fixed checking habit."`},
+{c:"Role & Technical",src:"real",q:"Explain a situation where you improved a process related to data handling.",
+a:`"At our college fest, registrations were written on paper and typed later — duplicates and missing entries everywhere. I created a Google Form linked to a sheet, with dropdowns instead of free typing. Entry errors dropped almost to zero and the team saved hours daily. Lesson: most data errors come from the process, not the person — fix the process and accuracy follows."`},
+{c:"Role & Technical",src:"extra",q:"What is Amazon's business model? What do you know about e-commerce?",
+a:`"Amazon is a marketplace: it sells products itself and also lets millions of third-party sellers list on its platform. The model runs on customer trust — fast delivery, easy returns, accurate product information. That's exactly where the catalog team fits: every listing a customer sees is the catalog team's responsibility. Amazon also earns from Prime subscriptions, advertising and AWS cloud services."`},
+{c:"Role & Technical",src:"world",q:"How do you ensure product data and images stay accurate and consistent across multiple e-commerce platforms?",
+a:`"With a single source of truth. I'd maintain one master sheet or system holding the verified title, attributes, images and price for each product, and every platform listing gets updated only from that master — never edited independently. Then regular audits: export listings from each platform, compare against the master with VLOOKUP or match formulas, and fix mismatches in batches. Consistency fails when people edit in five places; it succeeds when everything flows from one verified source."`,
+t:"From recruiter question banks used worldwide for catalog hiring — the 'single source of truth' idea is the answer they want to hear."},
+{c:"Role & Technical",src:"world",q:"What strategies would you use to optimize product content for better visibility and sales?",
+a:`"Three levers. Titles: include the words customers actually search — brand, product type, key spec, size — within the character limit. Content: clear bullet points answering buyer doubts (material, dimensions, compatibility, warranty) plus high-quality images from multiple angles. Keywords: fill backend search terms with relevant synonyms customers might type, like 'earphones' and 'headphones'. Better content means the product appears in more searches and converts more visitors — accurate data is not just correctness, it's sales."`,
+t:"Based on the winning answer in ZipRecruiter's global guide: descriptions + titles + keywords driven by how customers actually search."},
+{c:"Role & Technical",src:"world",q:"What is SEO and why does it matter for a product listing?",
+a:`"SEO — search engine optimization — means writing content so it appears when people search. For listings it matters twice: inside Amazon, the search algorithm ranks products using the words in titles, bullets and backend keywords; outside, Google can send shoppers straight to a product page. A perfect product with a poorly-written listing is invisible. So a Catalog Specialist's word choices directly affect how many customers ever see the product."`},
+
+/* ---------- Scenarios & Behavioral ---------- */
+{c:"Scenarios & STAR",src:"real",q:"How do you prioritize tasks when dealing with multiple catalog issues or a high volume of updates?",
+a:`"By customer impact first. An error live right now, misleading customers, beats any internal backlog task. Within that, I sort urgent-and-important first, then schedule important-but-not-urgent. If two deadlines truly clash, I inform my lead early so expectations are clear. I'd rather finish one task fully and accurately than juggle five half-done."`,
+t:"Asked in India AND on Glassdoor worldwide ('high volume of catalog updates'). The urgency–importance sorting is what cleared candidates used."},
+{c:"Scenarios & STAR",src:"real",q:"How would you handle a tight deadline? / How do you manage time under pressure?",
+a:`STAR: "Situation: my final-semester project was preponed by a week, during exams. Task: finish my data-analysis portion without dropping quality. Action: I broke it into daily 2-hour blocks, did the hardest part first each morning, and told my group my plan early so nobody was surprised. Result: submitted a day early, scored an A. Under pressure, a written plan and early communication beat panic every time."`},
+{c:"Scenarios & STAR",src:"real",q:"Describe a conflict at work / a difficult team member and how you resolved it.",
+a:`STAR: "Situation: in a group project one teammate kept missing deadlines; others wanted to complain to the professor. Task: as coordinator, get the work done without breaking the team. Action: I spoke to him privately first — he was stuck on a part he didn't understand. I redistributed tasks by strengths and set small twice-weekly check-ins. Result: he delivered well and we finished on time. Lesson: understand the reason behind a problem before judging the person."`,
+t:"The cleared candidate focused on the resolution, never the blame. Do the same."},
+{c:"Scenarios & STAR",src:"real",q:"Tell me about a time you faced a challenge and how you overcame it.",
+a:`STAR: "Situation: during a college event I got a data-entry task of 2,000 records with 3 days, and the source files were all in different formats. Task: standardize and enter everything accurately on time. Action: instead of starting blindly, I spent 2 hours building one template and converting all files into it; then entry became fast and uniform. I verified in batches of 100 instead of at the end. Result: finished half a day early, near-zero corrections. Time spent organizing first is never wasted."`},
+{c:"Scenarios & STAR",src:"real",q:"Describe a time you received constructive criticism. How did you handle it?",
+a:`"My professor told me my project report was accurate but too long — good work hidden in too many words. It stung at first, but I asked him for one example page, understood the point, and rewrote it to half the length. He later used it as a sample for juniors. Since then I treat feedback as free coaching — I ask clarifying questions instead of defending myself."`},
+{c:"Scenarios & STAR",src:"real",q:"Describe a situation where you demonstrated leadership.",
+a:`STAR: "Situation: our department fest team lost its coordinator two weeks before the event. Task: 10 volunteers needed organizing; I stepped up. Action: I listed all pending tasks, assigned by strength, created a group for daily 5-minute updates, and personally took the hardest task — sponsor follow-ups. Result: the event ran on schedule and we gained two new sponsors. To me, leadership means taking ownership and making others' work easier — not giving orders."`},
+{c:"Scenarios & STAR",src:"real",q:"Describe a situation you faced that best reflects one of Amazon's Leadership Principles.",
+a:`"I'll pick Ownership. In our college society, nobody 'owned' the accounts register and receipts kept going missing. Though it wasn't my role, I volunteered, built a simple Excel tracker, photographed every receipt, and presented monthly summaries. By year-end, accounts were audit-ready for the first time. Ownership means acting like it's your company — never saying 'that's not my job'."`,
+t:"Reported on Glassdoor. Prepare ONE story per principle: Customer Obsession, Ownership, Dive Deep, Deliver Results — 45 seconds each."},
+{c:"Scenarios & STAR",src:"world",q:"Describe a time you identified a gap in a product catalog. What did you do?",
+a:`"In my college e-commerce project, I noticed our sample store had detailed listings for phones but electronics accessories had no size or compatibility info — the exact details buyers ask about. I created a required-attributes checklist per category and updated 40 listings against it. In a real catalog role I'd do the same: audit by category, define the mandatory attribute set, find listings missing it, and fill the gaps in priority order of sales volume."`,
+t:"From recruiter question banks worldwide. If you have no real example, describe the METHOD — audit → checklist → fill gaps by priority."},
+{c:"Scenarios & STAR",src:"world",q:"How do you collaborate with other departments (marketing, sales, customer service) so the catalog supports business goals?",
+a:`"The catalog is used by everyone, so I'd keep two-way communication. From customer service: which listings generate complaints or returns — those get fixed first. From marketing/sales: which products are in upcoming campaigns — their listings get audited before traffic arrives. And I'd share back a simple report of common data issues so teams stop them at the source. A catalog specialist who works alone fixes errors; one who collaborates prevents them."`},
+{c:"Scenarios & STAR",src:"world",q:"Describe a time you led or managed a catalog update project with deadlines.",
+a:`"As a fresher I'll share a comparable project: digitizing our library's 800-book register in two weeks with three volunteers. I split the work by rack, created one shared sheet with fixed columns so all entries matched, set a daily target of 60 books each, and did a nightly spot-check of 10% of entries. We finished two days early with under 1% errors. The same method scales to catalog updates: one template, clear daily targets, and continuous quality checks — not one big check at the end."`},
+
+/* ---------- Puzzles ---------- */
+{c:"Puzzles",src:"real",q:"How would you organize a library of books with no titles or categories?",
+a:`"I'd choose sorting criteria I CAN observe: size, cover type, language of the text, subject guessed by skimming pages, condition. Practically, two passes — rough sort by language and subject, then finer sorting within groups. I could also build my own tagging system: a code sticker on each book plus a register, so the 'catalog' is created by me even though the books came without one. Trade-off: skimming is accurate but slow; sorting by appearance is fast but rough — I'd combine both based on how urgently the library is needed."`,
+t:"Secretly a catalog question! The interviewer watches whether you naturally think like a cataloger: create metadata, standardize, tag. The cleared candidate gave multiple solutions with pros and cons."},
+{c:"Puzzles",src:"real",q:"Estimate how many tennis balls fit in a car.",
+a:`"Step by step: car interior ≈ 4m × 1.5m × 1m = 6 cubic meters; seats and dashboard eat space, so usable ≈ 3–4 m³. A tennis ball is ~6.5cm across ≈ 0.00014 m³, and balls pack at ~70% efficiency. So 3.5 ÷ 0.00014 × 0.7 ≈ roughly 17,000–18,000 balls. The exact number doesn't matter — the method does: total volume, minus obstacles, divided by unit volume, adjusted for packing."`,
+t:"Golden rule from cleared candidates: think ALOUD. They grade your approach, not your arithmetic."},
+{c:"Puzzles",src:"real",q:"Cut a cake into 8 equal pieces with only 3 cuts.",
+a:`"Two vertical cuts in a plus (+) shape give 4 pieces. The third cut goes horizontally through the middle of the cake's height, splitting all 4 pieces into top and bottom halves — 8 equal pieces, 3 cuts."`},
+{c:"Puzzles",src:"real",q:"How would you approach a problem where the data provided is incomplete?",
+a:`"First, ask clarifying questions — often the data exists but wasn't shared. If it truly isn't available, make reasonable assumptions, state them clearly, and solve based on them, marking the answer as 'subject to these assumptions'. Then flag which missing data would most change the result, so it gets collected first. What I'd never do: silently guess and present it as fact."`},
+
+/* ---------- Leadership Principles quick cards ---------- */
+{c:"Leadership Principles",src:"extra",q:"What is Customer Obsession, in simple words? Give an example answer.",
+a:`"Every decision starts from what's best for the customer, then works backwards. Catalog example: 'If I find a wrong product image, I don't wait for my queue — a customer could order the wrong item today. I fix or escalate it immediately, because the customer's trust matters more than my task list.'"`,
+t:"This principle hides inside complaint-scenario questions and 'why does catalog accuracy matter?'"},
+{c:"Leadership Principles",src:"extra",q:"What is Ownership? Give an example answer.",
+a:`"Acting like it's your own company — never saying 'not my job', and thinking long-term, not just today's target. Example line for interviews: 'When our fest team lost its coordinator, I took over the volunteer roster even though nobody asked me to, because the event mattered more than my role description.'"`},
+{c:"Leadership Principles",src:"extra",q:"What is Dive Deep? Give an example answer.",
+a:`"Leaders check the details themselves and don't accept surface-level answers. Catalog example: 'If a listing error appears twice, I don't just fix it twice — I pull the data, find the pattern, and trace which upload or seller feed is creating it.'"`},
+{c:"Leadership Principles",src:"extra",q:"What is Deliver Results? Give an example answer.",
+a:`"Finishing on time with quality despite obstacles — inputs matter, but outcomes count. Example line: 'When my project files arrived in mixed formats with 3 days left, I didn't extend the deadline — I reorganized my method and still delivered early with near-zero errors.'"`}
+];
+
+const JAM_TOPICS=["Online shopping vs offline shopping","Social media — boon or bane","My favorite festival","Importance of the English language","Artificial intelligence in daily life","My hometown","Work from home vs office","The person I admire the most","Digital India","If I had one superpower","Importance of time management","Cricket — more than a game","My first mobile phone","Why customer service matters","One habit I want to change","E-commerce in India","My dream job","Teamwork vs individual work","Cash vs digital payments","A book or movie that changed my thinking"];
+
+/* ============== safe storage (persists on the deployed site; falls back silently elsewhere) ============== */
+const store={
+  get(k){try{return localStorage.getItem(k)}catch(e){return null}},
+  set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+};
+const savedLearned=(store.get('cc_learned')||'').split(',').filter(x=>x!=='').map(Number);
+
+/* ============== state ============== */
+const state={learned:new Set(savedLearned),cat:"All",search:"",good:0,bad:0,currentIdx:null};
+function saveLearned(){store.set('cc_learned',[...state.learned].join(','))}
+
+/* ============== tabs ============== */
+document.querySelectorAll('.tabbar button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tabbar button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
+    document.getElementById(btn.dataset.tab).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ============== rounds accordion ============== */
+document.querySelectorAll('#stepList .step .card').forEach(card=>{
+  card.addEventListener('click',()=>card.parentElement.classList.toggle('open'));
+});
+
+/* ============== Q&A bank ============== */
+const cats=["All",...new Set(QA.map(x=>x.c))];
+const chipRow=document.getElementById('chipRow');
+function chipLabel(c){
+  const idxs=QA.map((x,i)=>({x,i})).filter(o=>c==="All"||o.x.c===c);
+  const done=idxs.filter(o=>state.learned.has(o.i)).length;
+  return c+' <small>'+done+'/'+idxs.length+'</small>';
+}
+function renderChips(){
+  chipRow.innerHTML='';
+  cats.forEach(c=>{
+    const b=document.createElement('button');
+    b.className='chip'+(c===state.cat?' active':'');
+    b.innerHTML=chipLabel(c);
+    b.onclick=()=>{state.cat=c;renderChips();renderBank();};
+    chipRow.appendChild(b);
+  });
+}
+renderChips();
+document.getElementById('qsearch').addEventListener('input',e=>{state.search=e.target.value.toLowerCase();renderBank();});
+
+const srcBadge={real:'<span class="badge b-real">India · real</span>',world:'<span class="badge b-world">Global · real</span>',extra:'<span class="badge b-extra">Extra practice</span>'};
+
+function renderBank(){
+  const list=document.getElementById('qlist');list.innerHTML='';
+  let shown=0;
+  QA.forEach((item,i)=>{
+    const match=(state.cat==="All"||item.c===state.cat)&&(item.q.toLowerCase().includes(state.search)||item.a.toLowerCase().includes(state.search));
+    if(!match)return;
+    shown++;
+    const d=document.createElement('div');
+    d.className='card q'+(state.learned.has(i)?' learned':'');
+    d.innerHTML=`<div class="qtop">${srcBadge[item.src]}<span class="badge b-cat">${item.c}</span></div>
+      <h3>${item.q}<span class="chev">▾</span></h3>
+      <div class="ans"><div class="ans-inner"><div class="star">${item.a}</div>${item.t?`<div class="tip"><b>💡 Trainer tip:</b> ${item.t}</div>`:''}
+      <button class="markbtn">${state.learned.has(i)?'✔ Mastered':'Mark as mastered'}</button></div></div>`;
+    d.querySelector('h3').onclick=()=>d.classList.toggle('open');
+    d.querySelector('.markbtn').onclick=(e)=>{e.stopPropagation();
+      state.learned.has(i)?state.learned.delete(i):state.learned.add(i);
+      saveLearned();renderBank();updateProgress();};
+    list.appendChild(d);
+  });
+  document.getElementById('qcount').textContent=shown+" question"+(shown!==1?"s":"")+" shown · "+QA.length+" total";
+}
+function updateProgress(){
+  const n=state.learned.size,t=QA.length,pct=Math.round(n/t*100);
+  document.getElementById('pillCount').textContent=n;
+  document.getElementById('pillTotal').textContent=t;
+  document.getElementById('meterFill').style.width=pct+'%';
+  const btn=document.getElementById('btnCert'),msg=document.getElementById('certMsg');
+  if(pct>=80){btn.disabled=false;msg.textContent="Unlocked! You've mastered "+pct+"% — download your certificate below.";}
+  else{btn.disabled=true;msg.textContent="Master at least 80% of the questions to unlock your certificate. Current: "+pct+"% ("+(Math.ceil(t*0.8)-n)+" more to go).";}
+  if(typeof renderChips==='function')renderChips();
+}
+renderBank();updateProgress();
+
+/* ============== student name ============== */
+function refreshName(){
+  const n=store.get('cc_name');
+  document.getElementById('studentName').textContent=n?n:'Set your name';
+}
+document.getElementById('namePill').onclick=()=>{
+  const cur=store.get('cc_name')||'';
+  const n=prompt('Enter your name (shown on your certificate):',cur);
+  if(n&&n.trim()){store.set('cc_name',n.trim().slice(0,40));refreshName();}
+};
+refreshName();
+
+/* ============== student visit counter (free CounterAPI; hides itself if unreachable) ============== */
+(function(){
+  fetch('https://api.counterapi.dev/v1/catalogchamp-trainer/visits/up')
+    .then(r=>r.json())
+    .then(d=>{
+      const c=d.count??(d.data&&(d.data.count??d.data.up_count));
+      if(c!==undefined&&c!==null){
+        document.getElementById('visitCount').textContent=c;
+        document.getElementById('visitPill').style.display='block';
+      }
+    }).catch(()=>{});
+})();
+
+/* ============== aptitude quiz (30 questions, shuffled each attempt) ============== */
+const QUIZ=[
+{q:"What is 25% of 480?",o:["100","110","120","140"],c:2,e:"25% = one quarter. 480 ÷ 4 = 120."},
+{q:"Two numbers are in the ratio 3:5 and their sum is 64. The smaller number is:",o:["18","24","30","40"],c:1,e:"3+5 = 8 parts. 64 ÷ 8 = 8 per part. Smaller = 3 × 8 = 24."},
+{q:"Find the odd one out: Apple, Mango, Potato, Banana",o:["Apple","Mango","Potato","Banana"],c:2,e:"Potato is a vegetable; the rest are fruits."},
+{q:"Choose the word closest in meaning to ACCURATE:",o:["Fast","Precise","Careful","Honest"],c:1,e:"Accurate = precise/exact. 'Careful' describes the person, not the result."},
+{q:"Complete the series: 2, 6, 12, 20, 30, ?",o:["36","40","42","44"],c:2,e:"Differences grow by 2: +4, +6, +8, +10, so next is +12 → 42."},
+{q:"Choose the grammatically correct sentence:",o:["He don't know the answer.","He doesn't knows the answer.","He doesn't know the answer.","He not know the answer."],c:2,e:"With he/she/it use 'doesn't' + base verb: doesn't know."},
+{q:"In VLOOKUP, what does FALSE in the last argument mean?",o:["Skip blank cells","Approximate match","Exact match","Search backwards"],c:2,e:"FALSE = exact match — exactly what catalog data checking needs."},
+{q:"Which Amazon Leadership Principle means 'act like it's your own company, never say not-my-job'?",o:["Customer Obsession","Ownership","Dive Deep","Deliver Results"],c:1,e:"That is Ownership. Prepare one real story for it."},
+{q:"You find a live listing showing the wrong price. Your FIRST step is:",o:["Change the price immediately to what looks right","Verify the correct price from a trusted source","Delete the listing","Ignore it — pricing is another team's job"],c:1,e:"Always verify from a trusted source before editing — accuracy first, and never 'not my job'."},
+{q:"A good typing target before the Versant typing test is:",o:["10 WPM","15 WPM","30 WPM with 95% accuracy","Speed doesn't matter"],c:2,e:"30+ WPM with high accuracy is a safe benchmark. Accuracy matters as much as speed."},
+{q:"What is 15% of 200?",o:["25","30","35","40"],c:1,e:"10% of 200 = 20, 5% = 10, so 15% = 30."},
+{q:"A shopkeeper buys an item for ₹80 and sells it for ₹100. Profit percentage?",o:["20%","25%","30%","15%"],c:1,e:"Profit = 20. Profit% = 20/80 × 100 = 25%."},
+{q:"The average of 10, 20, 30, 40, 50 is:",o:["25","28","30","35"],c:2,e:"Sum = 150, count = 5, average = 30."},
+{q:"If CAT is coded as DBU, how is DOG coded?",o:["EPH","EPF","CPH","DPH"],c:0,e:"Each letter moves +1: D→E, O→P, G→H = EPH."},
+{q:"Complete the series: 5, 10, 20, 40, ?",o:["60","70","80","100"],c:2,e:"Each number doubles: 40 × 2 = 80."},
+{q:"Find the odd one out: Rose, Lotus, Marigold, Mango",o:["Rose","Lotus","Marigold","Mango"],c:3,e:"Mango is a fruit; the rest are flowers."},
+{q:"Choose the opposite (antonym) of EXPAND:",o:["Extend","Contract","Enlarge","Spread"],c:1,e:"Expand = grow bigger; contract = become smaller."},
+{q:"Choose the correct spelling:",o:["Recieve","Receeve","Receive","Riceive"],c:2,e:"Rule: 'i before e, except after c' → receive."},
+{q:"Fill in the blank: She ___ to the office every day.",o:["go","goes","going","gone"],c:1,e:"She/he/it takes 'goes' in simple present tense."},
+{q:"Ram walks 3 km North, then 4 km East. How far is he from the starting point?",o:["7 km","5 km","4 km","6 km"],c:1,e:"Right-angle triangle: √(3² + 4²) = √25 = 5 km."},
+{q:"What does SOP stand for?",o:["Standard Operating Procedure","System Of Products","Special Order Process","Standard Output Plan"],c:0,e:"SOPs are the written process rules a Catalog Specialist must follow exactly."},
+{q:"You find two listings for the exact same product. As per catalog best practice, they should be:",o:["Both kept for more visibility","Merged/removed as per duplicate guidelines","Given different prices","Ignored"],c:1,e:"Duplicates confuse customers and split reviews — they're merged or removed per guidelines."},
+{q:"The main purpose of a pivot table in Excel is to:",o:["Type faster","Summarize large data quickly","Change cell colors","Print pages"],c:1,e:"Pivot tables summarize thousands of rows into totals, counts and comparisons in seconds."},
+{q:"Which Excel feature deletes repeated rows in one click?",o:["Freeze Panes","Conditional Formatting","Remove Duplicates","Merge Cells"],c:2,e:"Data tab → Remove Duplicates — a daily tool in catalog cleanup."},
+{q:"In interviews, STAR stands for:",o:["Start, Try, Act, Repeat","Situation, Task, Action, Result","Skill, Talent, Attitude, Rank","Study, Think, Answer, Review"],c:1,e:"Structure every behavioral answer as Situation → Task → Action → Result."},
+{q:"A customer complains the product image is wrong. Which Leadership Principle should drive your response?",o:["Frugality","Customer Obsession","Think Big","Bias for Action only"],c:1,e:"Customer Obsession: a live error hurting customers becomes top priority."},
+{q:"3/4 written as a percentage is:",o:["70%","75%","80%","85%"],c:1,e:"3 ÷ 4 = 0.75 = 75%."},
+{q:"Choose the word closest in meaning to MANDATORY:",o:["Optional","Compulsory","Rare","Helpful"],c:1,e:"Mandatory = compulsory/required. Mandatory attributes must be filled in every listing."},
+{q:"Complete the series: A, C, F, J, ?",o:["M","N","O","P"],c:2,e:"Gaps grow: +2, +3, +4, then +5 → J + 5 = O."},
+{q:"If today is Monday, what day will it be after 61 days?",o:["Friday","Saturday","Sunday","Monday"],c:1,e:"61 ÷ 7 = 8 weeks remainder 5. Monday + 5 = Saturday."}
+];
+let quizOrder=[],qi=0,qscore=0,qActive=false;
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const quizQ=document.getElementById('quizQ'),quizOpts=document.getElementById('quizOpts'),
+      quizNum=document.getElementById('quizNum'),quizExp=document.getElementById('quizExp'),
+      btnQS=document.getElementById('btnQuizStart'),btnQN=document.getElementById('btnQuizNext');
+btnQS.onclick=()=>{quizOrder=shuffle(QUIZ);qi=0;qscore=0;qActive=true;btnQS.style.display='none';showQuiz();};
+btnQN.onclick=()=>{qi++;qi<quizOrder.length?showQuiz():endQuiz();};
+function showQuiz(){
+  const it=quizOrder[qi];
+  quizNum.textContent="Question "+(qi+1)+" of "+quizOrder.length+"  ·  Score: "+qscore;
+  quizQ.textContent=it.q;
+  quizExp.className='quizexp';quizExp.innerHTML='';
+  btnQN.style.display='none';
+  quizOpts.innerHTML='';
+  it.o.forEach((opt,idx)=>{
+    const b=document.createElement('button');
+    b.className='opt';b.textContent=String.fromCharCode(65+idx)+".  "+opt;
+    b.onclick=()=>{
+      [...quizOpts.children].forEach(x=>x.disabled=true);
+      if(idx===it.c){b.classList.add('correct');qscore++;}
+      else{b.classList.add('wrong');quizOpts.children[it.c].classList.add('correct');}
+      quizExp.innerHTML="<b>💡</b> "+it.e;quizExp.classList.add('show');
+      btnQN.style.display='inline-block';
+      btnQN.textContent=qi===quizOrder.length-1?"See my result →":"Next question →";
+      quizNum.textContent="Question "+(qi+1)+" of "+quizOrder.length+"  ·  Score: "+qscore;
+    };
+    quizOpts.appendChild(b);
+  });
+}
+function endQuiz(){
+  qActive=false;
+  quizNum.textContent="Quiz complete";
+  const pct=qscore/quizOrder.length;
+  const verdict=pct>=0.8?"🎉 Excellent — interview-ready level!":pct>=0.6?"👍 Good — revise the ones you missed.":"💪 Keep practicing — do the quiz daily this week.";
+  quizQ.textContent="";
+  quizOpts.innerHTML='<div class="quizscore"><div class="big">'+qscore+' / '+quizOrder.length+'</div><p>'+verdict+'</p></div>';
+  quizExp.className='quizexp';btnQN.style.display='none';
+  btnQS.style.display='inline-block';btnQS.textContent="↻ Try again";
+  if(pct>=0.8)confetti();
+}
+
+/* ============== certificate generator ============== */
+document.getElementById('btnCert').onclick=()=>{
+  const name=store.get('cc_name')||prompt('Enter your name for the certificate:')||'Catalog Champ Student';
+  if(!store.get('cc_name')&&name)store.set('cc_name',name.trim().slice(0,40));
+  refreshName();
+  const pct=Math.round(state.learned.size/QA.length*100);
+  const cv=document.createElement('canvas');cv.width=1200;cv.height=850;
+  const x=cv.getContext('2d');
+  x.fillStyle='#FFFDF6';x.fillRect(0,0,1200,850);
+  x.strokeStyle='#14202E';x.lineWidth=10;x.strokeRect(30,30,1140,790);
+  x.strokeStyle='#FF9900';x.lineWidth=3;x.strokeRect(52,52,1096,746);
+  x.fillStyle='#FF9900';x.fillRect(52,52,1096,14);
+  x.textAlign='center';
+  x.fillStyle='#4A5A6B';x.font='600 26px Arial';
+  x.fillText('CATALOG CHAMP · INTERVIEW TRAINING PROGRAM',600,150);
+  x.fillStyle='#14202E';x.font='bold 64px Georgia';
+  x.fillText('Certificate of Completion',600,240);
+  x.fillStyle='#4A5A6B';x.font='26px Arial';
+  x.fillText('This certifies that',600,330);
+  x.fillStyle='#14202E';x.font='bold 58px Georgia';
+  x.fillText(name,600,410);
+  x.strokeStyle='#FF9900';x.lineWidth=2;
+  x.beginPath();x.moveTo(320,435);x.lineTo(880,435);x.stroke();
+  x.fillStyle='#4A5A6B';x.font='26px Arial';
+  x.fillText('has successfully mastered '+pct+'% of the Amazon Catalog Specialist',600,500);
+  x.fillText('interview question bank, covering role knowledge, scenarios,',600,540);
+  x.fillText('Leadership Principles, and problem-solving.',600,580);
+  x.fillStyle='#14202E';x.font='600 24px Arial';
+  const d=new Date();
+  x.fillText('Date: '+d.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}),600,680);
+  x.fillStyle='#FF9900';x.font='bold 30px Georgia';
+  x.fillText('★ Interview Ready ★',600,740);
+  const a=document.createElement('a');
+  a.download=name.replace(/\s+/g,'_')+'_certificate.png';
+  a.href=cv.toDataURL('image/png');
+  a.click();
+  confetti();
+};
+
+/* ============== daily streak ============== */
+(function(){
+  const today=new Date().toDateString();
+  const last=store.get('cc_lastvisit');
+  let streak=parseInt(store.get('cc_streak')||'1',10);
+  if(last&&last!==today){
+    const diff=(new Date(today)-new Date(last))/86400000;
+    streak=diff===1?streak+1:1;
+  }
+  if(!last)streak=1;
+  store.set('cc_lastvisit',today);
+  store.set('cc_streak',String(streak));
+  document.getElementById('streakCount').textContent=streak;
+  document.getElementById('streakPill').innerHTML='🔥 Streak: <b>'+streak+'</b> day'+(streak>1?'s':'')+(streak>=7?' — on fire!':'');
+})();
+
+/* ============== question of the day ============== */
+(function(){
+  const start=new Date(new Date().getFullYear(),0,0);
+  const day=Math.floor((new Date()-start)/86400000);
+  const it=QA[day%QA.length];
+  document.getElementById('qotdQ').textContent=it.q;
+  document.getElementById('qotdBtn').onclick=()=>{
+    const card=document.getElementById('qotdCard');
+    document.getElementById('qotdA').innerHTML=it.a+(it.t?'<div class="tip" style="margin-top:10px;background:var(--teal-soft);border-radius:8px;padding:10px 12px;font-size:.83rem;color:#075E6E"><b>💡</b> '+it.t+'</div>':'');
+    card.classList.toggle('revealed');
+    document.getElementById('qotdBtn').textContent=card.classList.contains('revealed')?'Hide answer':'👁 Reveal answer';
+  };
+})();
+
+/* ============== confetti ============== */
+function confetti(){
+  const emojis=['🎉','⭐','🧡','✨','🎊','📦'];
+  for(let i=0;i<36;i++){
+    const s=document.createElement('span');
+    s.className='confetti';
+    s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    s.style.left=Math.random()*100+'vw';
+    s.style.animationDuration=(2+Math.random()*2)+'s';
+    s.style.fontSize=(0.9+Math.random()*1.1)+'rem';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),4200);
+  }
+}
+
+/* ============== practice flashcards ============== */
+const fc=document.getElementById('flashcard'),fcQ=document.getElementById('fcQ'),fcA=document.getElementById('fcA'),fcCat=document.getElementById('fcCat');
+const btnReveal=document.getElementById('btnReveal'),gradeBtns=document.getElementById('gradeBtns');
+document.getElementById('btnNew').onclick=()=>{
+  state.currentIdx=Math.floor(Math.random()*QA.length);
+  const it=QA[state.currentIdx];
+  fc.classList.remove('revealed');
+  fcCat.textContent=it.c;
+  fcQ.textContent=it.q;
+  fcA.innerHTML=it.a+(it.t?`<div class="tip" style="margin-top:10px;background:var(--teal-soft);border-radius:8px;padding:10px 12px;font-size:.83rem;color:#075E6E"><b>💡</b> ${it.t}</div>`:'');
+  btnReveal.disabled=false;gradeBtns.style.display='none';
+};
+btnReveal.onclick=()=>{fc.classList.add('revealed');gradeBtns.style.display='flex';btnReveal.disabled=true;};
+document.getElementById('btnGood').onclick=()=>grade(true);
+document.getElementById('btnBad').onclick=()=>grade(false);
+function grade(good){
+  good?state.good++:state.bad++;
+  if(good&&state.currentIdx!==null){state.learned.add(state.currentIdx);saveLearned();renderBank();updateProgress();}
+  document.getElementById('scoreLine').innerHTML=`Session score: <b>${state.good}</b> nailed · <b>${state.bad}</b> to revise`;
+  gradeBtns.style.display='none';
+  document.getElementById('btnNew').click();
+}
+
+/* ============== JAM trainer ============== */
+let jamInt=null;
+document.getElementById('btnJam').onclick=()=>{
+  clearInterval(jamInt);document.getElementById('jamClock').textContent='02:00';
+  document.getElementById('jamTopic').textContent=JAM_TOPICS[Math.floor(Math.random()*JAM_TOPICS.length)];
+};
+document.getElementById('btnJamStart').onclick=()=>{
+  clearInterval(jamInt);let s=120;const clock=document.getElementById('jamClock');
+  const tick=()=>{const m=String(Math.floor(s/60)).padStart(2,'0'),sec=String(s%60).padStart(2,'0');clock.textContent=m+':'+sec;
+    if(s<=0){clearInterval(jamInt);clock.textContent='⏰ Time up — how did it go?';}s--;};
+  tick();jamInt=setInterval(tick,1000);
+};
+</script>
+</body>
+</html>
