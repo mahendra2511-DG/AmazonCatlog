@@ -244,7 +244,17 @@ header::before{content:"";position:absolute;width:320px;height:320px;border:1px 
 .tip-box{border-radius:14px;padding:12px 16px;margin-top:10px;background:rgba(255,255,255,.025);border:1px dashed rgba(255,255,255,.16)}
 .human-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.2px;margin-left:7px}
 </style>
-</head>
+<style id="category-tabs-style">
+.tabs{position:sticky;top:0;z-index:20}
+.tabbar{overflow-x:auto;scrollbar-width:thin;justify-content:flex-start}
+.tabbar button{white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease}
+.tabbar button:hover{transform:translateY(-1px)}
+#bank .lede{max-width:980px}
+.category-hero{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;margin-bottom:16px;background:linear-gradient(135deg,#fff,#f4f8fb);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.category-hero h2{margin-bottom:2px}
+.category-hero p{color:var(--ink-soft);font-size:.9rem}
+@media(max-width:700px){.tabbar{padding:8px}.tabbar button{font-size:.78rem;padding:8px 11px}.category-hero{display:block}}
+</style></head>
 <body>
 
 <header>
@@ -261,13 +271,19 @@ header::before{content:"";position:absolute;width:320px;height:320px;border:1px 
 </header>
 
 <nav class="tabs">
-  <div class="tabbar" role="tablist">
-    <button class="active" data-tab="roadmap" role="tab">🗺️ Roadmap</button>
-    <button data-tab="rounds" role="tab">🪜 Interview Rounds</button>
-    <button data-tab="bank" role="tab">💬 Q&amp;A Bank</button>
-    <button data-tab="practice" role="tab">🎯 Practice Mode</button>
-    <button data-tab="quiz" role="tab">🧮 Aptitude Quiz</button>
-    <button data-tab="resources" role="tab">📚 Blogs &amp; Resources</button>
+  <div class="tabbar" role="tablist" aria-label="Interview question categories">
+    <button class="active" data-tab="roadmap" role="tab">🏠 Home</button>
+    <button data-tab="bank" data-group="logical" role="tab">🧠 Logical Aptitude</button>
+    <button data-tab="bank" data-group="hr" role="tab">👤 HR</button>
+    <button data-tab="bank" data-group="behavioral" role="tab">💬 Behavioral</button>
+    <button data-tab="bank" data-group="technical" role="tab">🛠️ Technical &amp; Catalog</button>
+    <button data-tab="bank" data-group="data" role="tab">📊 Excel / SQL / Python</button>
+    <button data-tab="bank" data-group="leadership" role="tab">🚀 Leadership &amp; Scenarios</button>
+    <button data-tab="bank" data-group="operations" role="tab">⚙️ SOP &amp; Operations</button>
+    <button data-tab="bank" data-group="metrics" role="tab">📈 Metrics</button>
+    <button data-tab="bank" data-group="all" role="tab">📚 All Questions</button>
+    <button data-tab="practice" role="tab">🎯 Practice</button>
+    <button data-tab="quiz" role="tab">🧮 Quiz</button>
   </div>
 </nav>
 
@@ -373,7 +389,15 @@ header::before{content:"";position:absolute;width:320px;height:320px;border:1px 
   <p class="lede">Tap a question to reveal a detailed interview-ready answer, a real-life example, and trainer tips. Mark questions as ✔ Mastered to track progress. Badges show where each question comes from: <span class="badge b-real">India · real</span> reported by Indian candidates, <span class="badge b-world">Global · real</span> asked worldwide, <span class="badge b-extra">Extra practice</span> written for deeper prep.</p><div class="research-note"><b>🧠 Logical Reasoning added:</b> Candidate reports for Amazon Catalog Associate/Specialist interviews mention logical/basic aptitude, puzzles and problem-solving. The questions below combine the reported style with catalog-data scenarios for targeted practice.</div>
   <div class="meter"><div id="meterFill"></div></div>
   <div class="research-note">📚 <b>Expanded question bank:</b> includes role-specific research prompts, catalog scenarios, metrics, technical topics and logical/aptitude practice. “Research · role practice” questions are preparation prompts, not guarantees of an exact Amazon interview.</div>
-<div class="toolrow">
+<div class="category-hero">
+    <div>
+      <div class="eyebrow">INTERVIEW QUESTION HUB</div>
+      <h2 id="categoryTitle">All Questions</h2>
+      <p id="categoryDesc">Choose a topic tab above and study only the questions you need.</p>
+    </div>
+    <div class="badge b-cat" id="categoryCount">236 questions</div>
+  </div>
+  <div class="toolrow">
     <div class="search"><input id="qsearch" type="text" placeholder="Search questions… (e.g. VLOOKUP, deadline, weakness)" aria-label="Search questions"></div>
   </div>
   <div class="chips" id="chipRow" style="margin-bottom:14px"></div>
@@ -2377,16 +2401,62 @@ const store={
 const savedLearned=(store.get('cc_learned')||'').split(',').filter(x=>x!=='').map(Number);
 
 /* ============== state ============== */
-const state={learned:new Set(savedLearned),cat:"All",search:"",good:0,bad:0,currentIdx:null};
+const state={learned:new Set(savedLearned),cat:"All",group:"all",search:"",good:0,bad:0,currentIdx:null};
+function groupMatch(item){
+  if(state.group==="all") return true;
+  return (CATEGORY_GROUPS[state.group]||[]).includes(item.c);
+}
+function updateCategoryHero(){
+  const meta=CATEGORY_TEXT[state.group]||CATEGORY_TEXT.all;
+  const total=QA.filter(groupMatch).length;
+  const title=document.getElementById('categoryTitle');
+  const desc=document.getElementById('categoryDesc');
+  const count=document.getElementById('categoryCount');
+  if(title) title.textContent=meta[0];
+  if(desc) desc.textContent=meta[1];
+  if(count) count.textContent=total+" question"+(total!==1?"s":"");
+}
+
 function saveLearned(){store.set('cc_learned',[...state.learned].join(','))}
 
 /* ============== tabs ============== */
+const CATEGORY_GROUPS={
+  logical:["Aptitude & Logical Reasoning","Logical Reasoning","Logical / Aptitude","Puzzles"],
+  hr:["HR & Intro","Interview Strategy"],
+  behavioral:["Behavioral and Situational Insights","Behavioral & Leadership","Scenarios & STAR","Behavioral","Communication"],
+  technical:["Role & Technical","Technical Expertise","Catalog & Data Quality","Research & Judgment","Strategic Thinking and Problem-Solving","Ethical Decision-Making","Adaptability and Forward-Thinking","Sensitive Content & Judgment","Customer Experience"],
+  data:["Excel & Analytics","SQL & Python","Excel","Data / SQL / Python"],
+  leadership:["Leadership and Team Management","Leadership Principles"],
+  operations:["Process & SOP","Process / SOP","Operations & Escalation","Operational Excellence","Prioritization"],
+  metrics:["Metrics and Performance Tracking"]
+};
+const CATEGORY_TEXT={
+  logical:["Logical Aptitude","Percentages, ratios, number series, directions, puzzles and catalog-data reasoning."],
+  hr:["HR Questions","Introduction, motivation, strengths, weaknesses, career goals and resume questions."],
+  behavioral:["Behavioral Questions","STAR stories, challenges, mistakes, teamwork, conflict, ownership and communication."],
+  technical:["Technical & Catalog","Catalog quality, product attributes, research, discrepancies, compliance and problem solving."],
+  data:["Excel / SQL / Python","Pivot Tables, lookups, data cleaning, queries, duplicates, automation and analytics."],
+  leadership:["Leadership & Scenarios","Amazon Leadership Principles, stakeholder situations, prioritization and case-style questions."],
+  operations:["SOP & Operations","SOP handling, escalation, operational excellence, workload and decision-making."],
+  metrics:["Metrics","KPIs, defect rates, quality, productivity, trends and data-driven improvements."],
+  all:["All Questions","The complete question bank across every interview round and topic."]
+};
 document.querySelectorAll('.tabbar button').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.tabbar button').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
-    document.getElementById(btn.dataset.tab).classList.add('show');
+    const target=document.getElementById(btn.dataset.tab);
+    target.classList.add('show');
+    if(btn.dataset.group){
+      state.group=btn.dataset.group;
+      state.cat="All";
+      state.search="";
+      document.getElementById('qsearch').value="";
+      updateCategoryHero();
+      renderChips();
+      renderBank();
+    }
     window.scrollTo({top:0,behavior:'smooth'});
   });
 });
@@ -2400,7 +2470,7 @@ document.querySelectorAll('#stepList .step .card').forEach(card=>{
 const cats=["All",...new Set(QA.map(x=>x.c))];
 const chipRow=document.getElementById('chipRow');
 function chipLabel(c){
-  const idxs=QA.map((x,i)=>({x,i})).filter(o=>c==="All"||o.x.c===c);
+  const idxs=QA.map((x,i)=>({x,i})).filter(o=>groupMatch(o.x)&&(c==="All"||o.x.c===c));
   const done=idxs.filter(o=>state.learned.has(o.i)).length;
   return c+' <small>'+done+'/'+idxs.length+'</small>';
 }
@@ -2414,6 +2484,7 @@ function renderChips(){
     chipRow.appendChild(b);
   });
 }
+updateCategoryHero();
 renderChips();
 document.getElementById('qsearch').addEventListener('input',e=>{state.search=e.target.value.toLowerCase();renderBank();});
 
@@ -2423,7 +2494,7 @@ function renderBank(){
   const list=document.getElementById('qlist');list.innerHTML='';
   let shown=0;
   QA.forEach((item,i)=>{
-    const match=(state.cat==="All"||item.c===state.cat)&&(item.q.toLowerCase().includes(state.search)||item.a.toLowerCase().includes(state.search));
+    const match=groupMatch(item)&&(state.cat==="All"||item.c===state.cat)&&(item.q.toLowerCase().includes(state.search)||item.a.toLowerCase().includes(state.search));
     if(!match)return;
     shown++;
     const d=document.createElement('div');
