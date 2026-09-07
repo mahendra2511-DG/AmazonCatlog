@@ -42,14 +42,35 @@ header p.sub{margin-top:12px;color:#B9C6D2;max-width:560px;font-size:.95rem}
 .progress-pill{margin-top:20px;display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:8px 16px;border-radius:999px;font-size:.85rem}
 .progress-pill b{color:var(--tag)}
 
-/* ---------- tabs ---------- */
-nav.tabs{max-width:980px;margin:-58px auto 0;padding:0 16px;position:relative;z-index:5}
-.tabbar{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:6px;box-shadow:var(--shadow);overflow-x:auto;scrollbar-width:none}
-.tabbar::-webkit-scrollbar{display:none}
-.tabbar button{flex:1 0 auto;border:0;background:transparent;font-family:'Inter';font-weight:600;font-size:.86rem;color:var(--ink-soft);padding:10px 14px;border-radius:10px;cursor:pointer;white-space:nowrap;transition:.18s}
+/* ---------- primary nav (top bar on desktop, app-style bottom bar on mobile) ---------- */
+nav.tabs{max-width:980px;margin:-30px auto 0;padding:0 16px;position:relative;z-index:30}
+.tabbar{display:flex;flex-wrap:wrap;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:6px;box-shadow:var(--shadow)}
+.tabbar button{flex:1 1 auto;border:0;background:transparent;font-family:'Inter';font-weight:600;font-size:.85rem;color:var(--ink-soft);padding:11px 12px;border-radius:10px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;text-align:center}
 .tabbar button:hover{color:var(--ink)}
 .tabbar button.active{background:var(--ink);color:#fff}
 .tabbar button:focus-visible{outline:3px solid var(--tag);outline-offset:2px}
+
+/* the 6 primary destinations */
+.primary-tabbar{gap:2px}
+.primary-tabbar button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.72rem;font-weight:700;padding:9px 4px;line-height:1.2}
+.primary-tabbar button .ic{font-size:1.15rem;line-height:1}
+@media(min-width:640px){
+  .primary-tabbar button{flex-direction:row;font-size:.85rem;padding:10px 14px}
+  .primary-tabbar button .ic{font-size:1rem}
+}
+
+/* category switcher lives inside the Question Bank panel, not the primary nav */
+.cat-switcher{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.cat-switcher button{flex:0 0 auto;border:1.5px solid var(--line);background:var(--card);color:var(--ink-soft);font-weight:600;font-size:.82rem;padding:9px 15px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap}
+.cat-switcher button:hover{border-color:var(--ink);color:var(--ink)}
+.cat-switcher button.active{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* mobile: turn primary nav into a fixed app-style bottom bar */
+@media(max-width:640px){
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;top:auto;margin:0;padding:0;max-width:none;z-index:40}
+  .primary-tabbar{border-radius:0;border-left:0;border-right:0;border-bottom:0;box-shadow:0 -4px 18px rgba(20,32,46,.10);padding-bottom:max(6px,env(safe-area-inset-bottom))}
+  body{padding-bottom:64px}
+}
 
 main{max-width:980px;margin:0 auto;padding:26px 16px 70px}
 section.panel{display:none;animation:fade .35s ease}
@@ -233,7 +254,8 @@ header::before{content:"";position:absolute;width:320px;height:320px;border:1px 
 .blog{transition:transform .18s ease,box-shadow .18s ease}.blog:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(20,32,46,.10)}
 .study-note{background:linear-gradient(135deg,#fff7e8,#eef8fa);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 18px;box-shadow:var(--shadow)}
 .study-note h3{font-size:1rem;margin-bottom:4px}.study-note p{font-size:.86rem;color:var(--ink-soft)}
-@media(max-width:600px){header{padding-bottom:78px}main{padding-top:20px}.q{padding:14px}.q .ans-inner{font-size:.88rem}}
+@media(max-width:600px){header{padding-bottom:36px}main{padding-top:20px}.q{padding:14px}.q .ans-inner{font-size:.88rem}}
+@media(max-width:640px){header::after{display:none}nav.tabs{margin-top:0}}
 </style>
 
 <style id="human-answer-enhancement">
@@ -245,15 +267,13 @@ header::before{content:"";position:absolute;width:320px;height:320px;border:1px 
 .human-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.2px;margin-left:7px}
 </style>
 <style id="category-tabs-style">
-.tabs{position:sticky;top:0;z-index:20}
-.tabbar{overflow-x:auto;scrollbar-width:thin;justify-content:flex-start}
-.tabbar button{white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease}
-.tabbar button:hover{transform:translateY(-1px)}
+@media(min-width:641px){nav.tabs{position:sticky;top:0;z-index:20;padding-top:14px;background:var(--paper)}}
+.primary-tabbar button:hover{transform:translateY(-1px)}
 #bank .lede{max-width:980px}
 .category-hero{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;margin-bottom:16px;background:linear-gradient(135deg,#fff,#f4f8fb);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
 .category-hero h2{margin-bottom:2px}
 .category-hero p{color:var(--ink-soft);font-size:.9rem}
-@media(max-width:700px){.tabbar{padding:8px}.tabbar button{font-size:.78rem;padding:8px 11px}.category-hero{display:block}}
+@media(max-width:700px){.category-hero{display:block}}
 </style></head>
 <body>
 
@@ -271,19 +291,13 @@ header::before{content:"";position:absolute;width:320px;height:320px;border:1px 
 </header>
 
 <nav class="tabs">
-  <div class="tabbar" role="tablist" aria-label="Interview question categories">
-    <button class="active" data-tab="roadmap" role="tab">🏠 Home</button>
-    <button data-tab="bank" data-group="logical" role="tab">🧠 Logical Aptitude</button>
-    <button data-tab="bank" data-group="hr" role="tab">👤 HR</button>
-    <button data-tab="bank" data-group="behavioral" role="tab">💬 Behavioral</button>
-    <button data-tab="bank" data-group="technical" role="tab">🛠️ Technical &amp; Catalog</button>
-    <button data-tab="bank" data-group="data" role="tab">📊 Excel / SQL / Python</button>
-    <button data-tab="bank" data-group="leadership" role="tab">🚀 Leadership &amp; Scenarios</button>
-    <button data-tab="bank" data-group="operations" role="tab">⚙️ SOP &amp; Operations</button>
-    <button data-tab="bank" data-group="metrics" role="tab">📈 Metrics</button>
-    <button data-tab="bank" data-group="all" role="tab">📚 All Questions</button>
-    <button data-tab="practice" role="tab">🎯 Practice</button>
-    <button data-tab="quiz" role="tab">🧮 Quiz</button>
+  <div class="tabbar primary-tabbar" role="tablist" aria-label="Main sections">
+    <button class="active" data-tab="roadmap" role="tab"><span class="ic">🏠</span><span>Home</span></button>
+    <button data-tab="bank" data-group="all" role="tab"><span class="ic">📚</span><span>Question Bank</span></button>
+    <button data-tab="practice" role="tab"><span class="ic">🎯</span><span>Practice</span></button>
+    <button data-tab="quiz" role="tab"><span class="ic">🧮</span><span>Quiz</span></button>
+    <button data-tab="rounds" role="tab"><span class="ic">🧭</span><span>Rounds</span></button>
+    <button data-tab="resources" role="tab"><span class="ic">🔗</span><span>Resources</span></button>
   </div>
 </nav>
 
@@ -393,9 +407,20 @@ header::before{content:"";position:absolute;width:320px;height:320px;border:1px 
     <div>
       <div class="eyebrow">INTERVIEW QUESTION HUB</div>
       <h2 id="categoryTitle">All Questions</h2>
-      <p id="categoryDesc">Choose a topic tab above and study only the questions you need.</p>
+      <p id="categoryDesc">Pick a category below and study only the questions you need.</p>
     </div>
     <div class="badge b-cat" id="categoryCount">236 questions</div>
+  </div>
+  <div class="tabbar cat-switcher" role="tablist" aria-label="Question categories">
+    <button class="active" data-tab="bank" data-group="all" role="tab">📚 All</button>
+    <button data-tab="bank" data-group="logical" role="tab">🧠 Logical Aptitude</button>
+    <button data-tab="bank" data-group="hr" role="tab">👤 HR</button>
+    <button data-tab="bank" data-group="behavioral" role="tab">💬 Behavioral</button>
+    <button data-tab="bank" data-group="technical" role="tab">🛠️ Technical &amp; Catalog</button>
+    <button data-tab="bank" data-group="data" role="tab">📊 Excel / SQL / Python</button>
+    <button data-tab="bank" data-group="leadership" role="tab">🚀 Leadership &amp; Scenarios</button>
+    <button data-tab="bank" data-group="operations" role="tab">⚙️ SOP &amp; Operations</button>
+    <button data-tab="bank" data-group="metrics" role="tab">📈 Metrics</button>
   </div>
   <div class="toolrow">
     <div class="search"><input id="qsearch" type="text" placeholder="Search questions… (e.g. VLOOKUP, deadline, weakness)" aria-label="Search questions"></div>
@@ -2389,7 +2414,7 @@ const QA=[
     "ex": "For example, a product could look like a duplicate but actually be a legitimate size or color variation. I would check the product identifier, model, brand, pack size and the category's variation rules before changing the relationship. The goal is to avoid both duplicate catalog entries and incorrectly combining different products.",
     "t": "Human-answer tip: start with your approach, explain why you would do it, and then give the example. For behavioral questions, replace the sample structure with your real experience. Never claim an Amazon internal tool or metric you have not actually used."
   }
-]];;
+];
 
 const JAM_TOPICS=["Online shopping vs offline shopping","Social media — boon or bane","My favorite festival","Importance of the English language","Artificial intelligence in daily life","My hometown","Work from home vs office","The person I admire the most","Digital India","If I had one superpower","Importance of time management","Cricket — more than a game","My first mobile phone","Why customer service matters","One habit I want to change","E-commerce in India","My dream job","Teamwork vs individual work","Cash vs digital payments","A book or movie that changed my thinking"];
 
@@ -2443,8 +2468,11 @@ const CATEGORY_TEXT={
 };
 document.querySelectorAll('.tabbar button').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    document.querySelectorAll('.tabbar button').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
+    const tabId=btn.dataset.tab;
+    const groupId=btn.dataset.group||'all';
+    const samePanel=document.getElementById(tabId).classList.contains('show');
+    document.querySelectorAll('.primary-tabbar button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tabId));
+    document.querySelectorAll('.cat-switcher button').forEach(b=>b.classList.toggle('active',b.dataset.group===groupId));
     document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('show'));
     const target=document.getElementById(btn.dataset.tab);
     target.classList.add('show');
@@ -2457,7 +2485,7 @@ document.querySelectorAll('.tabbar button').forEach(btn=>{
       renderChips();
       renderBank();
     }
-    window.scrollTo({top:0,behavior:'smooth'});
+    if(!samePanel)window.scrollTo({top:0,behavior:'smooth'});
   });
 });
 
