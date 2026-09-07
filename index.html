@@ -56,7 +56,8 @@ section.panel{display:none;animation:fade .35s ease}
 section.panel.show{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .panel>h2{font-size:1.5rem;font-weight:800;margin-bottom:4px}
-.panel>.lede{color:var(--ink-soft);font-size:.95rem;margin-bottom:22px;max-width:640px}
+.panel>.research-note{margin:12px 0 18px;padding:12px 14px;border:1px solid rgba(20,184,166,.22);background:var(--teal-soft);border-radius:12px;color:var(--ink-soft);font-size:.9rem;line-height:1.55}.research-note b{color:var(--teal)}
+.lede{color:var(--ink-soft);font-size:.95rem;margin-bottom:22px;max-width:640px}
 
 /* ---------- generic card ---------- */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
@@ -121,6 +122,8 @@ section.panel.show{display:block}
 .q.open .ans{max-height:1200px}
 .q .ans-inner{padding-top:12px;font-size:.9rem}
 .q .ans-inner .tip{margin-top:10px;background:var(--teal-soft);border-radius:8px;padding:10px 12px;font-size:.83rem;color:#075E6E}
+.q .ans-inner .example{margin-top:10px;background:var(--tag-soft);border:1px solid #F5DDB0;border-radius:8px;padding:10px 12px;font-size:.83rem;color:#7A4B00}
+.q .ans-inner .example b{color:#5F3900}
 .q .ans-inner .tip b{color:#054752}
 .q .star b{color:var(--teal)}
 .markbtn{margin-top:12px;border:1.5px solid var(--line);background:var(--card);padding:7px 14px;border-radius:8px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer;color:var(--ink-soft);transition:.15s}
@@ -207,6 +210,29 @@ a.blog .go{display:inline-block;margin-top:9px;font-size:.8rem;font-weight:700;c
 footer{background:var(--ink);color:#8FA1B3;text-align:center;padding:26px 16px;font-size:.8rem}
 footer b{color:#fff}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- premium study UI polish ---------- */
+header{background:radial-gradient(circle at 90% 15%,rgba(255,153,0,.22),transparent 30%),radial-gradient(circle at 15% 5%,rgba(0,113,133,.25),transparent 30%),var(--ink)}
+header::before{content:"";position:absolute;width:320px;height:320px;border:1px solid rgba(255,255,255,.08);border-radius:50%;right:-120px;top:-150px;box-shadow:0 0 0 55px rgba(255,255,255,.025),0 0 0 110px rgba(255,255,255,.018)}
+.brand .box{box-shadow:0 8px 24px rgba(255,153,0,.28);transform:rotate(-4deg)}
+.tabbar{backdrop-filter:blur(12px)}
+.card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(20,32,46,.08),0 14px 34px rgba(20,32,46,.08)}
+.q{overflow:hidden;position:relative}
+.q::after{content:"";position:absolute;right:-40px;top:-40px;width:100px;height:100px;border-radius:50%;background:var(--teal-soft);opacity:.28;pointer-events:none}
+.q h3{position:relative;z-index:1;line-height:1.45}
+.q .ans-inner{color:#33485B;line-height:1.72}
+.q .star{background:#F8FAFC;border:1px solid #E7EDF3;border-radius:10px;padding:12px 14px}
+.q .ans-inner .example{box-shadow:inset 3px 0 0 var(--tag)}
+.q .ans-inner .tip{box-shadow:inset 3px 0 0 var(--teal)}
+.q.learned{background:linear-gradient(180deg,#fff,#F8FCFA)}
+.chip{transition:all .16s ease}.chip:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(20,32,46,.08)}
+.search input{box-shadow:0 2px 10px rgba(20,32,46,.04)}
+.meter{box-shadow:inset 0 1px 2px rgba(20,32,46,.08)}
+.blog{transition:transform .18s ease,box-shadow .18s ease}.blog:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(20,32,46,.10)}
+.study-note{background:linear-gradient(135deg,#fff7e8,#eef8fa);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 18px;box-shadow:var(--shadow)}
+.study-note h3{font-size:1rem;margin-bottom:4px}.study-note p{font-size:.86rem;color:var(--ink-soft)}
+@media(max-width:600px){header{padding-bottom:78px}main{padding-top:20px}.q{padding:14px}.q .ans-inner{font-size:.88rem}}
 </style>
 </head>
 <body>
@@ -215,7 +241,7 @@ footer b{color:#fff}
   <div class="hwrap">
     <div class="brand"><div class="box">C</div><span>CATALOG CHAMP</span></div>
     <h1>Crack the <em>Amazon Catalog Specialist</em> interview — round by round.</h1>
-    <p class="sub">Real questions collected from candidates in India and around the world, with ready model answers, a 3-week roadmap, and a practice mode. Built for freshers.</p>
+    <p class="sub">Real questions collected from candidates in India and around the world, with detailed model answers, real-life examples, a 3-week roadmap, and a practice mode. Built for freshers.</p>
     <div class="pillrow">
       <div class="progress-pill">📦 Mastered: <b id="pillCount">0</b>&nbsp;/ <span id="pillTotal">0</span></div>
       <div class="progress-pill" id="streakPill">🔥 Streak: <b id="streakCount">1</b> day</div>
@@ -280,7 +306,7 @@ footer b{color:#fff}
       <div class="goal">Full simulation &amp; polish</div>
       <ul>
         <li>Mock JAM in group setting (with elimination pressure)</li>
-        <li>Timed aptitude test — 40 questions</li>
+        <li>Timed aptitude test — 70+ questions</li>
         <li>Essay + typing + Versant simulation</li>
         <li>Mock technical / ops interview</li>
         <li>Mock manager + HR interview (record &amp; review body language)</li>
@@ -334,7 +360,7 @@ footer b{color:#fff}
 <!-- ================= Q&A BANK ================= -->
 <section id="bank" class="panel">
   <h2>Question &amp; Answer Bank</h2>
-  <p class="lede">Tap a question to reveal the model answer. Mark questions as ✔ Mastered to track progress. Badges show where each question comes from: <span class="badge b-real">India · real</span> reported by Indian candidates, <span class="badge b-world">Global · real</span> asked worldwide, <span class="badge b-extra">Extra practice</span> written for deeper prep.</p>
+  <p class="lede">Tap a question to reveal a detailed interview-ready answer, a real-life example, and trainer tips. Mark questions as ✔ Mastered to track progress. Badges show where each question comes from: <span class="badge b-real">India · real</span> reported by Indian candidates, <span class="badge b-world">Global · real</span> asked worldwide, <span class="badge b-extra">Extra practice</span> written for deeper prep.</p><div class="research-note"><b>🧠 Logical Reasoning added:</b> Candidate reports for Amazon Catalog Associate/Specialist interviews mention logical/basic aptitude, puzzles and problem-solving. The questions below combine the reported style with catalog-data scenarios for targeted practice.</div>
   <div class="meter"><div id="meterFill"></div></div>
   <div class="toolrow">
     <div class="search"><input id="qsearch" type="text" placeholder="Search questions… (e.g. VLOOKUP, deadline, weakness)" aria-label="Search questions"></div>
@@ -415,6 +441,9 @@ footer b{color:#fff}
     <a class="blog" href="https://www.typing.com" target="_blank" rel="noopener"><span class="src">Practice tool</span><h3>Typing.com — free typing trainer</h3><p>Build to 30+ WPM with 95% accuracy before the Versant typing test. 30 minutes daily is enough.</p><span class="go">Test your speed →</span></a>
     <a class="blog" href="https://www.amazon.jobs" target="_blank" rel="noopener"><span class="src">Amazon (official)</span><h3>Amazon Jobs — the only official application portal</h3><p>Always cross-check any recruiter message against openings listed here.</p><span class="go">Search openings →</span></a>
     <a class="blog" href="https://www.malwarebytes.com/blog/scams/2026/06/watch-out-for-high-paying-low-effort-amazon-job-texts" target="_blank" rel="noopener"><span class="src">Malwarebytes</span><h3>Spot fake "Amazon hiring" messages</h3><p>How task scams impersonate Amazon recruiters — every job seeker should read this before replying to any offer.</p><span class="go">Stay safe →</span></a>
+    <a class="blog" href="https://cdo.som.yale.edu/blog/2025/01/14/amazon-leadership-principles-interview-guide-sample-questions/" target="_blank" rel="noopener"><span class="src">Yale SOM / Exponent</span><h3>Amazon Leadership Principles interview guide</h3><p>Useful framework for STAR answers, measurable impact and interview follow-ups.</p><span class="go">Read guide →</span></a>
+    <a class="blog" href="https://www.tryexponent.com/blog/amazon-leadership-principles-interview" target="_blank" rel="noopener"><span class="src">Exponent · 2026</span><h3>Leadership Principles — current guide</h3><p>Current preparation material covering how Amazon-style behavioral interviews are evaluated.</p><span class="go">Read guide →</span></a>
+    <a class="blog" href="https://www.interview101.com/guides/amazon-leadership-principles-interview-questions-ownership-and-customer-obsessio-9b6b" target="_blank" rel="noopener"><span class="src">Interview101 · 2026</span><h3>Ownership &amp; Customer Obsession questions</h3><p>Extra behavioral question patterns for building your own STAR stories.</p><span class="go">Read patterns →</span></a>
   </div>
   <div class="warn"><b>⚠️ Safety rule for every student:</b> legitimate recruiters — including genuine staffing agencies like Russell Tobin — <b>never ask for money</b>, never hire over WhatsApp-only chats, and always use official email domains. Any "registration fee", "training deposit" or task-payment request = scam. Verify openings on the official Amazon Jobs portal.</div>
 </section>
@@ -437,116 +466,858 @@ footer b{color:#fff}
         extra = added for deeper practice
 ========================================================= */
 const QA=[
-/* ---------- HR & Introduction ---------- */
-{c:"HR & Intro",src:"real",q:"Tell me about yourself.",
-a:`"Good morning. My name is ______, and I completed my ______ from ______. During my studies I built strong computer skills — especially MS Excel and data entry — and I enjoy work that needs accuracy and attention to detail. I've also worked hard on my English communication through daily practice. I'm a patient, organized person who likes completing tasks correctly the first time. This Catalog Specialist role matches my strengths: working carefully with product data and helping customers get correct information."`,
-t:"60–90 seconds max. Name → education → 2 relevant skills → 1 trait → link to role. No family history or school marks."},
-{c:"HR & Intro",src:"real",q:"Why Amazon? / Why are you interested in this role?",
-a:`"Amazon is the most customer-focused company in the world, and its first leadership principle — Customer Obsession — matches how I like to work. Amazon also gives freshers real responsibility and a clear growth path. As a Catalog Specialist I would directly help millions of customers find accurate product information, so my daily work has real impact. That mix of learning, growth and impact is why I want to start my career here."`,
-t:"Candidates who cleared connected this answer to Leadership Principles, especially Customer Obsession."},
-{c:"HR & Intro",src:"real",q:"Why a non-technical role? (asked to engineering graduates)",
-a:`"My degree gave me analytical thinking and comfort with data and tools like Excel — and this role uses exactly those skills daily. Catalog work means analyzing data, finding errors and solving problems in a structured way. I chose this role deliberately: I enjoy detail-oriented, process-driven work more than coding, and I see e-commerce operations as a strong long-term career."`,
-t:"⚠️ Trap question. Never say it's a backup, and don't oversell technical projects — candidates report that works against you here."},
-{c:"HR & Intro",src:"real",q:"What are your strengths and weaknesses?",
-a:`"My biggest strength is attention to detail — in college I was the one who caught mistakes in group reports before submission. I'm also consistent: same accuracy in the eighth hour as the first. My weakness: earlier I spent too long perfecting small things, which made me slow. I've fixed this by setting time limits per task and doing one final check instead of repeated checks."`,
-t:"Weakness must be real, small, and paired with the improvement. Banned: 'I'm a perfectionist' alone, 'I work too hard', 'no weaknesses'."},
-{c:"HR & Intro",src:"real",q:"What are your hobbies? What trainings or certifications did you do during graduation?",
-a:`"I enjoy reading about technology and e-commerce, and I play cricket on weekends, which taught me teamwork. During graduation I completed a certification in MS Excel [use your real one], which is directly useful for this role."`,
-t:"Prepare your own TRUE version. Any certificate you mention WILL get follow-up questions — no fake claims."},
-{c:"HR & Intro",src:"real",q:"What are your career goals? Where do you see yourself in a few years?",
-a:`"Short term, I want to become an expert Catalog Specialist — someone the team trusts for accuracy and speed. In 3–4 years I'd like to grow into a senior or quality/team-lead role within Amazon's catalog or operations team. My goal is to grow within the company, not to keep switching jobs."`},
-{c:"HR & Intro",src:"real",q:"What are your salary expectations?",
-a:`"As a fresher, my priority is the learning and the opportunity. I'm comfortable with the standard salary offered for this position as per company norms."`},
-{c:"HR & Intro",src:"real",q:"How do you expect this role to be? What are its key challenges?",
-a:`"I expect to create and correct product listings, check data quality, and follow SOPs with high accuracy under daily targets. The key challenges: maintaining accuracy while meeting volume targets, handling ambiguous product info, and staying focused during repetitive work. I'm prepared — I'm comfortable with routine work and I know accuracy targets are non-negotiable at Amazon."`},
-{c:"HR & Intro",src:"world",q:"What motivated you to apply, and how do your skills match the requirements of a Catalog Specialist?",
-a:`"Two things motivated me: I enjoy detailed data work, and I wanted a role where accuracy directly helps customers. My skills match on three points — strong Excel for handling product data, careful reading habits for catching listing errors, and good written English for creating clean product content. The job description asks for attention to detail and process discipline, and those are exactly the strengths my professors and teammates know me for."`,
-t:"Asked to a real candidate in Amazon's Amsterdam office — same job, worldwide. Structure: motivation (2 reasons) + skills mapped to the JD (3 points)."},
+{
+  "c": "HR & Intro",
+  "src": "real",
+  "q": "Tell me about yourself.",
+  "a": "Good morning. My name is ____, and I completed my ____ from ____. I have developed strong computer and data-handling skills, especially in MS Excel, data entry and basic SQL/Python. I enjoy work that requires accuracy, careful reading and structured problem solving. During my studies/projects, I worked with datasets and learned to clean information, validate outputs and meet deadlines. I’m interested in the Catalog Specialist role because the work combines data quality, research, judgment and customer impact. I’m a patient and organized person, and my goal is to deliver accurate work consistently while learning and growing at Amazon.",
+  "ex": "Example: If your project involved 5,000+ rows, explain what you cleaned, what checks you performed and what the final result was. This makes the introduction evidence-based.",
+  "t": "Example: If your project involved 5,000+ rows, explain what you cleaned, what checks you performed and what the final result was. This makes the introduction evidence-based."
+},
+{
+  "c": "HR & Intro",
+  "src": "real",
+  "q": "Why Amazon? / Why are you interested in this role?",
+  "a": "Amazon’s customer focus and scale are major reasons I’m interested. This role is especially attractive because accurate catalog information directly affects a customer’s buying decision. I also like that the work requires both analytical skills and human judgment: checking data, researching sources, following SOPs, identifying defects and communicating findings. My strengths in Excel, data handling, attention to detail and structured problem solving align well with those requirements. I see it as a role where I can contribute from day one and continue developing my analytical and operational skills.",
+  "ex": "Example: A wrong product size can lead to returns and poor customer experience; correcting the data prevents that downstream impact.",
+  "t": "Example: A wrong product size can lead to returns and poor customer experience; correcting the data prevents that downstream impact."
+},
+{
+  "c": "HR & Intro",
+  "src": "real",
+  "q": "Why a non-technical role? (asked to engineering graduates)",
+  "a": "I don’t see this as a choice between technical and non-technical work. My technical education gave me analytical thinking and comfort with tools such as Excel, SQL and Python. Catalog operations lets me apply those skills to a business problem: identifying errors, analyzing patterns, researching product information and making accurate decisions under defined guidelines. I’m choosing the role because I enjoy data quality and structured problem solving, and I believe the combination fits my strengths.",
+  "ex": "Use a genuine college, internship or project situation that demonstrates the skill you mention; the example should have a clear action and result.",
+  "t": "If you are an engineering graduate, be ready for: “Why not software development?” Keep the answer positive and role-focused."
+},
+{
+  "c": "HR & Intro",
+  "src": "real",
+  "q": "What are your strengths and weaknesses?",
+  "a": "My main strengths are attention to detail, ownership and patience with repetitive data work. For example, I use a checklist to validate important fields before submitting a dataset. I also like to understand the reason behind an error rather than only fixing one record. My weakness is that I can sometimes spend too much time rechecking a task. I’m improving this by time-boxing routine reviews and escalating genuinely ambiguous cases instead of repeatedly checking them myself. This helps me balance accuracy with productivity.",
+  "ex": "Use a genuine college, internship or project situation that demonstrates the skill you mention; the example should have a clear action and result.",
+  "t": "Do not choose a weakness that is actually a disguised strength, such as “I work too hard.” Give a real improvement mechanism."
+},
+{
+  "c": "HR & Intro",
+  "src": "real",
+  "q": "What are your hobbies? What trainings or certifications did you do during graduation?",
+  "a": "My hobbies are ____. They help me maintain consistency and focus. During graduation, I completed ____. I learned ____ from it and applied that learning in ____. I particularly focused on improving Excel/data skills because they are relevant to roles involving data quality and operations.",
+  "ex": "Example: If you completed an Excel course, explain one thing you actually learned—Pivot Tables, lookups, conditional formatting or data cleaning—not just the certificate name.",
+  "t": "Example: If you completed an Excel course, explain one thing you actually learned—Pivot Tables, lookups, conditional formatting or data cleaning—not just the certificate name."
+},
+{
+  "c": "HR & Intro",
+  "src": "real",
+  "q": "What are your career goals? Where do you see yourself in a few years?",
+  "a": "In the short term, I want to become highly reliable in catalog operations—understanding SOPs, improving accuracy, and becoming comfortable with the tools and metrics used by the team. In the medium term, I want to take ownership of more complex audits, become a subject-matter resource and contribute process improvements. I would like to grow within the organization based on performance and learning rather than focusing only on a title.",
+  "ex": "Use a genuine college, internship or project situation that demonstrates the skill you mention; the example should have a clear action and result.",
+  "t": "A strong answer shows ambition plus patience: first master the process, then expand scope."
+},
+{
+  "c": "HR & Intro",
+  "src": "real",
+  "q": "What are your salary expectations?",
+  "a": "As a fresher, my priority is the opportunity to learn, contribute and build a strong career. I’m comfortable with the standard compensation offered for this position according to company norms. I would be happy to discuss the complete compensation structure if we move forward.",
+  "ex": "Use a genuine college, internship or project situation that demonstrates the skill you mention; the example should have a clear action and result.",
+  "t": "Avoid giving an arbitrary number unless the recruiter specifically requires one."
+},
+{
+  "c": "HR & Intro",
+  "src": "real",
+  "q": "How do you expect this role to be? What are its key challenges?",
+  "a": "I expect the role to involve product-data audits, creating or correcting catalog content, researching product information, following SOPs, analyzing quality metrics and making decisions where the evidence may be incomplete. The key challenges I expect are maintaining high accuracy while handling volume, interpreting ambiguous information, meeting SLAs and staying consistent with policy. I would handle these through SOP discipline, structured validation, source checking and timely escalation of unclear cases.",
+  "ex": "Use a genuine college, internship or project situation that demonstrates the skill you mention; the example should have a clear action and result.",
+  "t": "This maps directly to the job description: audits, judgment, editorial decisions, research, metrics and process improvement."
+},
+{
+  "c": "HR & Intro",
+  "src": "world",
+  "q": "What motivated you to apply, and how do your skills match the requirements of a Catalog Specialist?",
+  "a": "I was motivated by the combination of detailed data work and customer impact. My skills match the role in three areas: Excel/data handling for analysis, careful research and validation for product information, and written communication for clear audit decisions. I also enjoy structured work where quality standards are defined and measurable. The opportunity to use these skills at Amazon’s scale is what attracted me.",
+  "ex": "Use a genuine college, internship or project situation that demonstrates the skill you mention; the example should have a clear action and result.",
+  "t": "Prepare one concrete proof point for every skill you mention."
+},
+{
+  "c": "Role & Technical",
+  "src": "real",
+  "q": "Explain the role of a Catalog Specialist in your own words.",
+  "a": "In my own words, a Catalog Specialist protects the quality of the product catalog. The role involves reviewing product information, identifying incorrect or missing attributes, researching reliable sources, correcting or recommending corrections according to SOPs, and documenting decisions. The specialist also looks for patterns in defects, communicates findings to stakeholders and helps improve the process. Ultimately, the goal is accurate, consistent and useful product information so customers can make informed buying decisions.",
+  "ex": "Real-time example: if a listing says 1 kg but the manufacturer specification says 500 g, the specialist should verify the source, follow the applicable rule and correct/escalate the attribute rather than relying on assumption.",
+  "t": "Real-time example: if a listing says 1 kg but the manufacturer specification says 500 g, the specialist should verify the source, follow the applicable rule and correct/escalate the attribute rather than relying on assumption."
+},
+{
+  "c": "Role & Technical",
+  "src": "real",
+  "q": "How would you handle discrepancies in product listings?",
+  "a": "I would first identify exactly what is inconsistent—for example, title, brand, model, size, image, category or technical attribute. Then I would compare the catalog data with authoritative or approved sources and the applicable SOP. I would determine whether the issue is a simple correction, a variation issue, a potential duplicate or something that requires escalation. I would make the approved correction, record the rationale if required, and check related fields/listings so the same root cause is not left elsewhere.",
+  "ex": "Example: A product page has ‘128 GB’ in the title but ‘64 GB’ in the bullet and manufacturer page. I would validate the source and resolve the discrepancy according to policy.",
+  "t": "Example: A product page has ‘128 GB’ in the title but ‘64 GB’ in the bullet and manufacturer page. I would validate the source and resolve the discrepancy according to policy."
+},
+{
+  "c": "Role & Technical",
+  "src": "real",
+  "q": "A product has incorrect attributes and is causing customer complaints. How would you rectify it?",
+  "a": "I would treat a customer-impacting incorrect attribute as a quality issue requiring prompt investigation. I’d identify the affected ASIN/listing, verify the incorrect attribute using approved sources, check whether other attributes are affected, and follow the SOP to correct or escalate it. After correction, I would validate the final listing and look for similar records or a common root cause. If the issue is systemic, I would communicate the pattern to the relevant stakeholder and recommend a preventive action.",
+  "ex": "Example: Incorrect compatibility information can cause customers to buy an incompatible accessory and return it. Correcting the attribute reduces customer friction and returns.",
+  "t": "Example: Incorrect compatibility information can cause customers to buy an incompatible accessory and return it. Correcting the attribute reduces customer friction and returns."
+},
+{
+  "c": "Role & Technical",
+  "src": "real",
+  "q": "How would you categorize a product with ambiguous details?",
+  "a": "I would not guess. First I would identify which attributes are known and which are missing. I would search the approved internal/external sources, compare product identifiers and manufacturer information, and check the category-specific rules. If enough evidence exists, I would classify the item using the defined decision logic. If two categories remain plausible and the SOP does not resolve it, I would escalate with the evidence and explain why the case is ambiguous.",
+  "ex": "Real-life catalog example: compare a product listing with an approved source, identify the exact field that is wrong or missing, apply the SOP, and validate the corrected record.",
+  "t": "This is a judgment question. The interviewer is testing whether you can work with incomplete information without making unsupported assumptions."
+},
+{
+  "c": "Role & Technical",
+  "src": "real",
+  "q": "What tools or software are you familiar with for catalog management?",
+  "a": "I’m familiar with MS Excel for sorting, filtering, duplicate checks, lookups, Pivot Tables and basic data validation. I have exposure to SQL for retrieving and analyzing records and Python for basic data cleaning/automation. I would also expect to learn Amazon’s internal catalog, audit and seller-support tools quickly. My approach with any new tool is to learn the approved workflow, practice on examples and verify my output before using it on live work.",
+  "ex": "Real-life catalog example: compare a product listing with an approved source, identify the exact field that is wrong or missing, apply the SOP, and validate the corrected record.",
+  "t": "Never claim hands-on experience with an Amazon internal tool unless you actually have it."
+},
+{
+  "c": "Role & Technical",
+  "src": "extra",
+  "q": "Follow-up: Explain how VLOOKUP works.",
+  "a": "VLOOKUP searches for a lookup value in the first column of a selected table and returns a related value from another column. For example, if Sheet 1 contains Product ID and Sheet 2 contains Product ID, Brand and Category, I can use VLOOKUP to bring Brand or Category into Sheet 1. I would also use IFERROR or an equivalent check for missing matches and validate whether the Product ID is unique. XLOOKUP is generally more flexible when it is available.",
+  "ex": "Interviewers may ask approximate syntax. Example: =VLOOKUP(A2,Sheet2!A:D,3,FALSE). Explain that FALSE requests an exact match.",
+  "t": "Interviewers may ask approximate syntax. Example: =VLOOKUP(A2,Sheet2!A:D,3,FALSE). Explain that FALSE requests an exact match."
+},
+{
+  "c": "Role & Technical",
+  "src": "real",
+  "q": "Describe a time you had to work with large datasets / a large amount of data.",
+  "a": "When working with a large dataset, I first understand the columns, definitions and expected output. Then I profile the data for nulls, duplicates, inconsistent formats and unusual values. I use Excel for manageable analysis and SQL/Python for larger or repetitive tasks where appropriate. I break the work into validation, processing and final quality checks rather than trying to inspect everything manually. Finally, I sample-check the output and reconcile totals so I know the transformation did not introduce errors.",
+  "ex": "Example: For 100,000 product rows, a Pivot Table can summarize defect counts while SQL can identify records with missing mandatory attributes.",
+  "t": "Example: For 100,000 product rows, a Pivot Table can summarize defect counts while SQL can identify records with missing mandatory attributes."
+},
+{
+  "c": "Role & Technical",
+  "src": "real",
+  "q": "How do you ensure accuracy in your work?",
+  "a": "I use a repeatable quality-control process: understand the requirement, validate input data, follow the current SOP, check high-risk fields, review exceptions, and perform a final sample or reconciliation before submission. I also avoid relying on memory when a written rule exists. If I find an ambiguous case, I escalate it rather than inventing a rule. This approach helps maintain accuracy even when the workload is repetitive or time-sensitive.",
+  "ex": "Example: Before submitting an audit batch, check record count, mandatory attributes, duplicate flags, corrected values and a sample of completed records.",
+  "t": "Example: Before submitting an audit batch, check record count, mandatory attributes, duplicate flags, corrected values and a sample of completed records."
+},
+{
+  "c": "Role & Technical",
+  "src": "real",
+  "q": "Explain a situation where you improved a process related to data handling.",
+  "a": "I look for repetitive manual steps that can be standardized without weakening controls. For example, if a data-cleaning task repeatedly requires checking blanks, duplicates and inconsistent text formats, I can create a structured Excel checklist or an approved Python script to flag exceptions. I would test the method on sample data, compare results with the existing process, document it and get the appropriate approval before adoption. The improvement should be measured by accuracy, cycle time or reduced rework—not automation for its own sake.",
+  "ex": "Example: A script can flag missing Brand values, but the final business decision should still follow the approved SOP and human-review requirements.",
+  "t": "Example: A script can flag missing Brand values, but the final business decision should still follow the approved SOP and human-review requirements."
+},
+{
+  "c": "Role & Technical",
+  "src": "extra",
+  "q": "What is Amazon's business model? What do you know about e-commerce?",
+  "a": "Amazon’s core model is an e-commerce and technology ecosystem connecting customers with products and services, with multiple revenue streams including retail sales, marketplace-related services, subscriptions and cloud services. For a Catalog Specialist, the important point is that the catalog is a critical layer of the e-commerce experience. Product information needs to be accurate, searchable and consistent because customers use it to compare and decide what to buy.",
+  "ex": "Real-life catalog example: compare a product listing with an approved source, identify the exact field that is wrong or missing, apply the SOP, and validate the corrected record.",
+  "t": "Avoid going too deep into Amazon financials unless asked. Bring the answer back to catalog/customer impact."
+},
+{
+  "c": "Role & Technical",
+  "src": "world",
+  "q": "How do you ensure product data and images stay accurate and consistent across multiple e-commerce platforms?",
+  "a": "I would maintain a common data standard, validate product identifiers and key attributes, use authoritative sources, and apply consistent formatting rules across platforms. I would also use automated checks where approved and manually review exceptions. Example: if a product appears on multiple marketplaces, I would verify that model number, dimensions, color and pack quantity are consistent rather than assuming that similar titles represent the same product.",
+  "ex": "Real-life catalog example: compare a product listing with an approved source, identify the exact field that is wrong or missing, apply the SOP, and validate the corrected record.",
+  "t": "The important concepts are standardization, source validation, identifiers, exception handling and governance."
+},
+{
+  "c": "Role & Technical",
+  "src": "world",
+  "q": "What strategies would you use to optimize product content for better visibility and sales?",
+  "a": "I would optimize content for clarity, relevance and accuracy rather than keyword stuffing. I’d ensure the title and key attributes accurately describe the product, use customer-relevant search terms where allowed, make bullets concise and informative, and ensure images support the product information. I would then use quality metrics and customer signals to identify opportunities. Any optimization must remain within Amazon’s content policies and category-specific guidelines.",
+  "ex": "Example: For a laptop, accurate model, processor, RAM, storage and screen size are more useful than repeating generic marketing words.",
+  "t": "Example: For a laptop, accurate model, processor, RAM, storage and screen size are more useful than repeating generic marketing words."
+},
+{
+  "c": "Role & Technical",
+  "src": "world",
+  "q": "What is SEO and why does it matter for a product listing?",
+  "a": "SEO is Search Engine Optimization—the practice of making information easier for a search engine to understand and retrieve for relevant searches. For a product listing, accurate titles, attributes and relevant terms can improve discoverability. But catalog quality comes first: misleading keywords or keyword stuffing can hurt the customer experience and violate content guidelines. I would focus on clear, accurate and relevant content.",
+  "ex": "Real-life catalog example: compare a product listing with an approved source, identify the exact field that is wrong or missing, apply the SOP, and validate the corrected record.",
+  "t": "Connect SEO to customer search intent, not just ranking."
+},
+{
+  "c": "Scenarios & STAR",
+  "src": "real",
+  "q": "How do you prioritize tasks when dealing with multiple catalog issues or a high volume of updates?",
+  "a": "I prioritize by customer impact, severity, SLA/deadline, dependencies and effort. A widespread defect affecting important product information would normally outrank a cosmetic formatting issue. I would group similar tasks where practical, track progress, and communicate early if a deadline is at risk. I would not sacrifice accuracy simply to clear the queue; instead I would use the correct escalation path when workload and SLA conflict.",
+  "ex": "Example: Ten tasks include a wrong price/attribute issue affecting many listings, five routine updates, and four low-impact formatting fixes. Investigate the highest-impact issue first while keeping the rest tracked.",
+  "t": "Example: Ten tasks include a wrong price/attribute issue affecting many listings, five routine updates, and four low-impact formatting fixes. Investigate the highest-impact issue first while keeping the rest tracked."
+},
+{
+  "c": "Scenarios & STAR",
+  "src": "real",
+  "q": "How would you handle a tight deadline? / How do you manage time under pressure?",
+  "a": "For a tight deadline, I first clarify the exact deliverable and SLA, then break the work into priority batches. I remove avoidable delays, use approved shortcuts such as filters or templates, and keep quality checks at critical points. If I identify a risk to the deadline, I communicate it early with the reason and proposed next step. After delivery, I review any errors or rework to improve the next cycle.",
+  "ex": "Real-life example: use a genuine college/project situation and explain Situation → Task → Action → Result. Focus on what you personally did and what improved.",
+  "t": "A strong phrase: “Speed is important, but I will not bypass a mandatory quality or compliance step.”"
+},
+{
+  "c": "Scenarios & STAR",
+  "src": "real",
+  "q": "Describe a conflict at work / a difficult team member and how you resolved it.",
+  "a": "I first try to understand the other person’s concern and separate the issue from the person. I would discuss the facts privately, refer to the agreed process or data, and look for a solution that supports the shared goal. If the disagreement remains and affects work, I would involve the appropriate lead rather than allowing the conflict to continue. For example, if a teammate and I disagree about a product classification, I would compare the evidence against the SOP and escalate the ambiguity if necessary.",
+  "ex": "Real-life example: use a genuine college/project situation and explain Situation → Task → Action → Result. Focus on what you personally did and what improved.",
+  "t": "Show calm communication, facts and resolution—not blame."
+},
+{
+  "c": "Scenarios & STAR",
+  "src": "real",
+  "q": "Tell me about a time you faced a challenge and how you overcame it.",
+  "a": "When I face a challenge, I first define the problem and identify what is under my control. Then I gather evidence, break the issue into smaller steps, try a solution, validate the result and ask for help when needed. For example, if a dataset contains inconsistent formats, I would profile the issue, identify the pattern, standardize the valid values, isolate exceptions and recheck the output. The result should be measurable: fewer errors, faster processing or a correct final deliverable.",
+  "ex": "Use one real academic/project example if you have one; do not invent a dramatic story.",
+  "t": "Use one real academic/project example if you have one; do not invent a dramatic story."
+},
+{
+  "c": "Scenarios & STAR",
+  "src": "real",
+  "q": "Describe a time you received constructive criticism. How did you handle it?",
+  "a": "I treat constructive criticism as information that can improve my work. I listen without becoming defensive, ask for a specific example, understand the expected standard and apply the feedback. For example, if a reviewer says my documentation is correct but too lengthy, I would restructure it into the decision, evidence and conclusion so another person can understand it quickly. I would then use the feedback consistently in future work.",
+  "ex": "Real-life example: use a genuine college/project situation and explain Situation → Task → Action → Result. Focus on what you personally did and what improved.",
+  "t": "Amazon values learning and continuous improvement; show that feedback changes your behavior."
+},
+{
+  "c": "Scenarios & STAR",
+  "src": "real",
+  "q": "Describe a situation where you demonstrated leadership.",
+  "a": "Leadership does not always mean having a formal title. In a project, I demonstrated leadership by taking ownership of organizing the work, clarifying responsibilities, helping teammates with blockers and ensuring the final output met the deadline. For example, when our team had inconsistent data formats, I suggested a common template, divided the cleanup work and performed the final validation. The team completed the output with fewer inconsistencies.",
+  "ex": "Real-life example: use a genuine college/project situation and explain Situation → Task → Action → Result. Focus on what you personally did and what improved.",
+  "t": "Pick a story where you influenced an outcome, even without being the team leader."
+},
+{
+  "c": "Scenarios & STAR",
+  "src": "real",
+  "q": "Describe a situation you faced that best reflects one of Amazon's Leadership Principles.",
+  "a": "A strong example for Customer Obsession would be a situation where I prioritized the end user’s needs instead of only completing the task. For Ownership, I would describe a problem I noticed and took responsibility for fixing. For Dive Deep, I would show how I investigated data beyond the obvious symptom. For Deliver Results, I would explain how I met a clear goal while maintaining quality. I would answer using STAR and connect the action to the relevant Leadership Principle.",
+  "ex": "Real-life example: use a genuine college/project situation and explain Situation → Task → Action → Result. Focus on what you personally did and what improved.",
+  "t": "Prepare at least 4 stories that can be reused across different Leadership Principles."
+},
+{
+  "c": "Scenarios & STAR",
+  "src": "world",
+  "q": "Describe a time you identified a gap in a product catalog. What did you do?",
+  "a": "I would identify the gap through audit results, defect trends, customer feedback or comparison against approved sources. Then I would quantify the scope, investigate the root cause and correct the affected records according to SOP. If the issue is recurring, I would propose a preventive change such as a validation rule, clearer guidance or targeted audit. Finally, I would communicate the finding and track whether the defect rate improves.",
+  "ex": "Example: Repeated missing pack-size attributes across one category could indicate a source/template problem rather than isolated associate errors.",
+  "t": "Example: Repeated missing pack-size attributes across one category could indicate a source/template problem rather than isolated associate errors."
+},
+{
+  "c": "Scenarios & STAR",
+  "src": "world",
+  "q": "How do you collaborate with other departments (marketing, sales, customer service) so the catalog supports business goals?",
+  "a": "I would align with each team on what they need from catalog data while keeping catalog standards and customer experience central. For example, customer service may highlight recurring confusion, marketing may need accurate product attributes, and operations may need clean structured data. I would share evidence from audits and metrics, document decisions and clarify ownership. When priorities conflict, I would use data, SOPs and customer impact to support the recommendation.",
+  "ex": "Real-life example: use a genuine college/project situation and explain Situation → Task → Action → Result. Focus on what you personally did and what improved.",
+  "t": "Do not promise to change catalog data merely because another team requests it; follow governance and approved ownership."
+},
+{
+  "c": "Scenarios & STAR",
+  "src": "world",
+  "q": "Describe a time you led or managed a catalog update project with deadlines.",
+  "a": "I would start by defining scope, deliverables, owners, dependencies, quality criteria and deadlines. Then I’d create a tracker, break the work into batches, monitor progress and quality, and communicate risks early. Before final delivery, I’d reconcile counts and sample-check the output. If something changes, I’d assess impact on the deadline and re-prioritize with stakeholders. This is how I would keep a catalog update project controlled rather than relying on last-minute effort.",
+  "ex": "Example: For a bulk attribute update, track records received, validated, corrected, exception cases and final QA.",
+  "t": "Example: For a bulk attribute update, track records received, validated, corrected, exception cases and final QA."
+},
+{
+  "c": "Puzzles",
+  "src": "real",
+  "q": "How would you organize a library of books with no titles or categories?",
+  "a": "I would first create a simple identification system instead of trying to guess categories immediately. I could assign each book a unique ID, record observable characteristics such as author, language, subject, edition and publisher, and then group them based on reliable information. Books with missing information would go into an exception queue for research. The key principle is to establish consistent attributes and classification rules before organizing the full collection.",
+  "ex": "Real-life work example: explain your assumptions, break the problem into smaller steps, calculate or reason systematically, and state the final conclusion clearly.",
+  "t": "This tests structured thinking. Think aloud: define the objective → choose attributes → classify → validate → handle exceptions."
+},
+{
+  "c": "Puzzles",
+  "src": "real",
+  "q": "Estimate how many tennis balls fit in a car.",
+  "a": "I would state my assumptions and use a rough estimation. Suppose a typical car’s usable internal volume is around 3 cubic meters, and an average tennis ball has a diameter around 6.7 cm. Its sphere volume is about 0.000157 cubic meters. Dividing gives roughly 19,000 balls before accounting for packing inefficiency. Because spheres leave empty spaces, a practical estimate might be around 12,000–15,000 balls depending on the car and packing method. The important part is the logical method and assumptions, not the exact number.",
+  "ex": "Real-life work example: explain your assumptions, break the problem into smaller steps, calculate or reason systematically, and state the final conclusion clearly.",
+  "t": "If the interviewer changes the car size, update the assumptions rather than defending the original number."
+},
+{
+  "c": "Puzzles",
+  "src": "real",
+  "q": "Cut a cake into 8 equal pieces with only 3 cuts.",
+  "a": "I would make two cuts vertically across the cake to create four pieces, then make the third cut horizontally through the middle. That produces eight pieces, assuming the cake is tall enough and the cuts are positioned appropriately.",
+  "ex": "Real-life work example: explain your assumptions, break the problem into smaller steps, calculate or reason systematically, and state the final conclusion clearly.",
+  "t": "The trick is to use the third cut in a different plane rather than making all three cuts from the top."
+},
+{
+  "c": "Puzzles",
+  "src": "real",
+  "q": "How would you approach a problem where the data provided is incomplete?",
+  "a": "I would separate known facts from assumptions and identify which missing information can change the decision. Then I would check approved sources or other available records, use the SOP’s ambiguity rules and document what I found. If the missing information is critical and cannot be verified, I would escalate rather than guess. Example: if a product’s size is missing, I would not infer it from a similar model because that could create incorrect catalog data.",
+  "ex": "Real-life work example: explain your assumptions, break the problem into smaller steps, calculate or reason systematically, and state the final conclusion clearly.",
+  "t": "This demonstrates sound judgment: evidence first, assumptions clearly labeled, escalation when required."
+},
+{
+  "c": "Leadership Principles",
+  "src": "extra",
+  "q": "What is Customer Obsession, in simple words? Give an example answer.",
+  "a": "Customer Obsession means starting with the customer’s experience and working backward. In catalog work, that means asking whether the information is accurate and useful enough for a customer to make a good purchase decision. Example: if I find that a product listing has a misleading compatibility attribute, I would not treat it as a minor data issue; I would investigate and correct it because customers could buy the wrong product.",
+  "ex": "Real-life catalog example: connect the principle to a product-data audit, explain the action you would take, and show the customer or quality impact.",
+  "t": "Do not just quote the principle. Explain the behavior it would cause in your role."
+},
+{
+  "c": "Leadership Principles",
+  "src": "extra",
+  "q": "What is Ownership? Give an example answer.",
+  "a": "Ownership means taking responsibility for the problem and the outcome, not only completing the task assigned to me. Example: if I notice that the same catalog defect is appearing repeatedly, I would fix the assigned records but also investigate the pattern, document it and raise a process-improvement recommendation. I would follow through until the issue is understood or handed to the correct owner.",
+  "ex": "Real-life catalog example: connect the principle to a product-data audit, explain the action you would take, and show the customer or quality impact.",
+  "t": "Ownership does not mean bypassing roles or approvals; it means ensuring the issue does not simply get ignored."
+},
+{
+  "c": "Leadership Principles",
+  "src": "extra",
+  "q": "What is Dive Deep? Give an example answer.",
+  "a": "Dive Deep means understanding the details behind a problem rather than stopping at the surface-level symptom. Example: if one category suddenly shows a higher defect rate, I would break the data down by attribute, seller, source, date and error type to find the pattern. If most defects came from one source or one field, I would investigate that root cause and recommend a targeted fix.",
+  "ex": "Real-life catalog example: connect the principle to a product-data audit, explain the action you would take, and show the customer or quality impact.",
+  "t": "Use data to show how you moved from symptom → pattern → root cause → action."
+},
+{
+  "c": "Leadership Principles",
+  "src": "extra",
+  "q": "What is Deliver Results? Give an example answer.",
+  "a": "Deliver Results means achieving the required outcome with quality, even when there are constraints. Example: if I have a large audit batch with a firm deadline, I would prioritize correctly, use approved tools to work efficiently, track progress and maintain required quality checks. If a blocker threatens the deadline, I would communicate early and escalate through the correct path. The result is not simply ‘finished’; it is a complete, accurate and on-time deliverable.",
+  "ex": "Real-life catalog example: connect the principle to a product-data audit, explain the action you would take, and show the customer or quality impact.",
+  "t": "Balance speed and quality. Never imply that you would skip mandatory controls to hit a number."
+},
+{
+  "c": "HR & Intro",
+  "src": "extra",
+  "q": "Give me your self-introduction in 60–90 seconds.",
+  "a": "Use this structure: name + education + relevant skills + one proof point + why this role. Example: “Good morning. My name is ____. I completed my ____ from ____. I have developed practical skills in Excel, data handling and basic SQL/Python through my academic projects. I enjoy work where accuracy and attention to detail matter. In my projects, I worked with datasets, cleaned information and checked outputs before submitting them. I am interested in the Catalog Specialist role because it combines data quality, research, judgment and customer impact. I believe my analytical mindset, patience and willingness to learn will help me contribute effectively.”",
+  "ex": "Use a real college/project example where you cleaned a dataset, created an Excel report, or validated records, then connect that experience to catalog accuracy.",
+  "t": "Customize the degree, project and skills to your actual resume. Do not memorize it word-for-word."
+},
+{
+  "c": "HR & Intro",
+  "src": "extra",
+  "q": "What are your strengths and weaknesses?",
+  "a": "My key strengths are attention to detail, ownership and structured problem solving. For example, while working on a data project, I used a validation checklist and rechecked exceptions before finalizing the output, which helped reduce avoidable errors. One weakness I am working on is that I sometimes spend too much time perfecting a task. I am improving this by time-boxing work, identifying the required quality level first and escalating when a decision is genuinely ambiguous.",
+  "ex": "In a real college project, explain how you checked every important field before submission and how that habit translates to catalog quality.",
+  "t": "A good weakness should be real but manageable, followed by a concrete improvement action."
+},
+{
+  "c": "HR & Intro",
+  "src": "extra",
+  "q": "Give examples to prove your strengths and weaknesses.",
+  "a": "For attention to detail, in a project I found that some records had inconsistent values and corrected them before analysis. For ownership, when I noticed a missing step in our process, I documented it and suggested a simple checklist. For my weakness, I noticed I could over-check routine work, so I started using a checklist and a defined review time. This helped me maintain quality without unnecessarily delaying delivery.",
+  "ex": "Use a real project where you applied analytical thinking or data tools, then explain why you prefer structured data-quality work over a coding-focused role.",
+  "t": "Use a Situation–Action–Result format and use numbers only when you can defend them."
+},
+{
+  "c": "HR & Intro",
+  "src": "extra",
+  "q": "Walk me through your resume.",
+  "a": "I’ll take you through it in three parts: education, projects/experience, and skills. My education gave me analytical and problem-solving fundamentals. In my project/experience section, I worked on ____ where I used ____ to handle/clean/analyze data and learned ____. My technical skills include Excel, SQL and basic Python, and I have applied them to practical data problems. The common thread is working with information carefully and converting it into useful outputs, which is why I see a strong fit with catalog operations.",
+  "ex": "Mention a genuine situation where you caught an incorrect value, spelling, calculation or duplicate before submission. Explain what you changed and how you prevented a repeat.",
+  "t": "Expect follow-up questions on every tool, project, metric and responsibility written on the resume."
+},
+{
+  "c": "Interview Strategy",
+  "src": "extra",
+  "q": "The interview is around 20 minutes. How should I prepare and structure my answers?",
+  "a": "Keep the first answer concise and make every answer evidence-based. A practical structure is: 1–2 minutes introduction, 3–5 minutes HR/motivation, 7–9 minutes role/Excel/data/scenario questions, and the remaining time for follow-ups and your questions. For behavioral questions, use STAR: Situation, Task, Action, Result. For technical questions, explain the concept, then give a catalog example. If you do not know something, say what you would check rather than guessing.",
+  "ex": "Pick one genuine hobby or certification and explain one skill it developed—for example, teamwork through cricket or attention to detail through an Excel course.",
+  "t": "Do not give 3-minute answers to simple questions. Interviewers often use follow-ups to test depth."
+},
+{
+  "c": "Logical / Aptitude",
+  "src": "extra",
+  "q": "Convert 5.5 kilometers to meters.",
+  "a": "1 kilometer = 1,000 meters. Therefore, 5.5 × 1,000 = 5,500 meters. In an interview, say the rule first, then calculate: “5.5 km is 5,500 m.”",
+  "ex": "Explain a genuine short-term goal such as mastering the SOP and quality metrics, followed by a medium-term goal such as owning complex audits or mentoring others.",
+  "t": "Practice unit conversions, percentages, ratios, averages, time-work and basic data interpretation."
+},
+{
+  "c": "Excel",
+  "src": "extra",
+  "q": "What is a Pivot Table? Explain with a real-time catalog example.",
+  "a": "A Pivot Table summarizes a large dataset without manually writing many formulas. Example: suppose you have 100,000 catalog records with columns such as Category, Seller, Brand, Status and Error Type. I can create a Pivot Table with Category in Rows, Error Type in Columns and Record ID in Values as a count. This immediately shows which categories have the highest number of defects. I can then filter by seller or date to identify patterns and prioritize investigation.",
+  "ex": "If asked about salary, do not invent a number. Explain that as a fresher your priority is the role, learning and performance, and that you are comfortable with the company's standard compensation for the position.",
+  "t": "Mention that the Pivot Table is useful for reporting, trend identification and quality monitoring."
+},
+{
+  "c": "Excel",
+  "src": "extra",
+  "q": "Explain VLOOKUP and XLOOKUP with a catalog example.",
+  "a": "VLOOKUP searches for a key in the first column of a selected range and returns a related value from another column. Example: if Product ID is in one sheet and Brand/Category is in another, I can use the Product ID to pull the corresponding Brand. XLOOKUP is a newer and more flexible alternative because it can look left or right and handles missing matches more cleanly. In a real catalog workflow, I would also validate the key, check for duplicates and confirm that the lookup result is logically correct.",
+  "ex": "Imagine a queue containing routine updates plus a high-impact defect affecting many customers. Explain that you would prioritize the high-impact issue while still tracking the remaining work.",
+  "t": "Do not claim XLOOKUP is available in every Excel version; it depends on the version/environment."
+},
+{
+  "c": "Data / SQL / Python",
+  "src": "extra",
+  "q": "How will you utilize Python and SQL in a Catalog Specialist role?",
+  "a": "SQL would help me retrieve, filter, aggregate and compare catalog records from databases. For example, I could query products where brand is missing, count defects by category, or compare records updated in two time periods. Python would help automate repetitive data-cleaning and validation tasks—for example, standardizing text, checking nulls, detecting unusual values, comparing two files and generating an exception report. I would use automation only within approved tools and processes, with human review for decisions that require judgment.",
+  "ex": "Pick one real project where you used Excel, data validation, research or communication. State the task, what you personally did, and the result, then map those skills to the job description.",
+  "t": "The strongest answer connects tools to business outcomes: accuracy, speed, repeatability and better reporting."
+},
+{
+  "c": "Data / SQL / Python",
+  "src": "extra",
+  "q": "How would you identify duplicate products in a product database?",
+  "a": "First I would define what counts as a duplicate based on the catalog rules. I would examine strong identifiers such as SKU, UPC/EAN/GTIN, ASIN or other approved product identifiers. If identifiers are missing, I would compare a combination of fields such as brand, model number, product title, pack size, color and key attributes. In SQL, I could group records by a candidate key and use COUNT(*) > 1 to find repeated values. In Python/Excel, I could also normalize text—such as case, spaces and punctuation—before matching. Finally, I would manually review high-confidence matches because similar-looking products can be legitimate variants.",
+  "ex": "A product listing says 1 kg, but the manufacturer's specification says 500 g. Verify the authoritative source, follow the applicable SOP, correct or escalate the attribute, and validate the final listing.",
+  "t": "Real-time example: two listings may both say “wireless mouse,” but different model numbers or pack sizes mean they should not automatically be merged."
+},
+{
+  "c": "Process / SOP",
+  "src": "extra",
+  "q": "What will you do if you are unsure about an SOP?",
+  "a": "I would not guess or create my own rule. First, I would re-read the current SOP, examples and decision tree and check whether the case is covered elsewhere. Then I would verify the latest approved guidance or consult the designated SME/lead if the case remains ambiguous. I would document the reason for the final decision if the process requires it. If I notice the SOP itself is unclear, I would raise the ambiguity through the correct channel so the guidance can be improved.",
+  "ex": "A title says 128 GB while another attribute says 64 GB. Compare approved sources, identify the correct value, make the permitted correction and check whether related listings have the same issue.",
+  "t": "This demonstrates judgment, compliance and ownership. Say “I will escalate ambiguity,” not “I will do what I think is best.”"
+},
+{
+  "c": "Prioritization",
+  "src": "extra",
+  "q": "How would you prioritize 10 tasks at the same time?",
+  "a": "I would first assess customer impact, business urgency, SLA/deadline, severity, dependencies and effort. High-severity customer-impacting catalog defects or tasks approaching an SLA would come first. Next I would handle items with dependencies that could block other work. I would then group similar tasks to improve efficiency while maintaining quality. I would track the queue and communicate early if capacity is insufficient. Example: if one task is a wrong safety-related attribute affecting many products and another is a low-impact formatting issue, I would investigate the higher-risk issue first, following the applicable escalation process.",
+  "ex": "If you have 10 simultaneous tasks, rank them by customer impact, severity, SLA, urgency and dependencies. Communicate early if the queue cannot be completed within the required SLA.",
+  "t": "A useful phrase is: “I prioritize by impact and urgency, not simply by the order in which tasks arrive.”"
+},
+{
+  "c": "Behavioral",
+  "src": "extra",
+  "q": "Tell me about a time you made a mistake.",
+  "a": "In a data project, I once missed an inconsistency during an initial review. I noticed it during validation before the final output was shared. I corrected the affected records, checked whether the same issue existed elsewhere, and added a validation step to my checklist. The lesson was that completing a task quickly is not enough; I need a consistent quality-control step before submission. Since then, I have used a structured review checklist for similar work.",
+  "ex": "In a real data project, if you discover an inconsistency during validation, correct it, check whether the same problem exists elsewhere and add a preventive validation step before final submission.",
+  "t": "Do not say “I never make mistakes.” Show accountability, correction, root cause and prevention."
+}
+,
+{
+  "c": "Catalog & Data Quality",
+  "src": "world",
+  "q": "How would you handle a product listing with incorrect attributes?",
+  "a": "I would first identify the exact incorrect attribute and verify the product identifier. Then I would compare the catalog value with an approved or authoritative source, check the current SOP and determine whether the issue is a correction, variation issue, duplicate or escalation. After an approved correction, I would validate the final record and check related listings for the same issue.",
+  "ex": "Example: If a phone says 8 GB RAM in the title but 6 GB in specifications, I would verify the exact model with the manufacturer source rather than choosing the value that looks more believable.",
+  "t": "Example: If a phone says 8 GB RAM in the title but 6 GB in specifications, I would verify the exact model with the manufacturer source rather than choosing the value that looks more believable."
+},
+{
+  "c": "Catalog & Data Quality",
+  "src": "world",
+  "q": "How do you ensure accuracy when auditing a large number of catalog items?",
+  "a": "I use a repeatable QC process: understand the audit scope, identify mandatory and high-risk fields, validate against approved sources, use filters or approved automation to flag exceptions, and perform a final sample/reconciliation. I also track error types so recurring problems become visible.",
+  "ex": "Example: For 10,000 rows, I can first flag missing mandatory attributes with Excel/SQL, manually review exceptions, then sample-check records that passed the rules.",
+  "t": "Example: For 10,000 rows, I can first flag missing mandatory attributes with Excel/SQL, manually review exceptions, then sample-check records that passed the rules."
+},
+{
+  "c": "Catalog & Data Quality",
+  "src": "world",
+  "q": "What would you do if two reliable sources show different product information?",
+  "a": "I would not choose based on personal preference. I would confirm that both sources refer to the exact same model, determine which source is authoritative for that attribute under the SOP, check for newer evidence, and escalate if the conflict cannot be resolved confidently.",
+  "ex": "Example: One page says product weight is 1.2 kg and another says 1.5 kg. I would check whether one means product weight and the other shipping weight before deciding.",
+  "t": "Example: One page says product weight is 1.2 kg and another says 1.5 kg. I would check whether one means product weight and the other shipping weight before deciding."
+},
+{
+  "c": "Catalog & Data Quality",
+  "src": "extra",
+  "q": "How would you distinguish a duplicate product from a legitimate variation?",
+  "a": "I would compare product identity rather than title similarity. I would check approved identifiers such as SKU/GTIN/UPC/EAN, model number, brand, core specifications and variation attributes such as color, size, capacity or pack count. Similar titles alone are not enough to merge records.",
+  "ex": "Example: Two records for the same model, color, storage and identifier with slightly different titles are strong duplicate candidates; two colors of the same model may be legitimate variants.",
+  "t": "Example: Two records for the same model, color, storage and identifier with slightly different titles are strong duplicate candidates; two colors of the same model may be legitimate variants."
+},
+{
+  "c": "Catalog & Data Quality",
+  "src": "extra",
+  "q": "What is a product variation and why is it important?",
+  "a": "A variation is a valid relationship between purchasable options of the same product family, such as size or color where category rules allow it. Correct variation structure helps customers compare options and prevents confusing or duplicate catalog experiences. I would always follow category-specific rules before changing relationships.",
+  "ex": "Example: Small, Medium and Large versions of the same T-shirt can be valid size variations, while a different design should not be linked just because the brand is the same.",
+  "t": "Example: Small, Medium and Large versions of the same T-shirt can be valid size variations, while a different design should not be linked just because the brand is the same."
+},
+{
+  "c": "Catalog & Data Quality",
+  "src": "extra",
+  "q": "How would you investigate a sudden increase in catalog defects?",
+  "a": "I would first verify the metric and compare the current rate with a baseline. Then I would segment by category, seller/source, attribute, date, workflow and defect type. I would inspect sample records, identify the concentrated pattern, find the likely root cause and recommend a targeted fix. Finally, I would monitor the metric after the change.",
+  "ex": "Example: If defects rise from 2% to 7% and most new errors come from one category after a template change, the source/template is a stronger root-cause candidate than general associate performance.",
+  "t": "Example: If defects rise from 2% to 7% and most new errors come from one category after a template change, the source/template is a stronger root-cause candidate than general associate performance."
+},
+{
+  "c": "Catalog & Data Quality",
+  "src": "extra",
+  "q": "Which catalog quality metrics would you monitor?",
+  "a": "I would look at metrics such as defect rate, audit accuracy, correction acceptance rate, rework rate, SLA adherence, completed volume, exception rate and recurring error categories. I would study trends and segment results instead of relying on one number. Exact definitions should come from the team's reporting framework.",
+  "ex": "Example: High productivity with high rework is a warning sign because fast completion may be creating downstream quality problems.",
+  "t": "Example: High productivity with high rework is a warning sign because fast completion may be creating downstream quality problems."
+},
+{
+  "c": "Catalog & Data Quality",
+  "src": "extra",
+  "q": "How would you perform root-cause analysis on a recurring catalog error?",
+  "a": "I would collect examples, group them by common characteristics, quantify the pattern and trace where the incorrect value entered the workflow. I would determine whether the cause is source data, unclear SOP, training, system behavior or manual entry. Then I would propose a preventive action and measure whether the defect rate improves.",
+  "ex": "Example: Repeated wrong units may originate from a supplier template using inches where the catalog expects centimeters; validation at the source could prevent recurrence.",
+  "t": "Example: Repeated wrong units may originate from a supplier template using inches where the catalog expects centimeters; validation at the source could prevent recurrence."
+},
+{
+  "c": "Research & Judgment",
+  "src": "world",
+  "q": "How do you validate product information from external sources?",
+  "a": "I verify the product identity first using model number, manufacturer and other identifiers. Then I use reliable/approved sources and compare the relevant specifications rather than copying the first search result. I follow the source hierarchy and category rules, document evidence when required, and escalate contradictions.",
+  "ex": "Example: For a laptop, I would verify processor, RAM, storage and display size against the exact manufacturer model, not a similar model in the same product family.",
+  "t": "Example: For a laptop, I would verify processor, RAM, storage and display size against the exact manufacturer model, not a similar model in the same product family."
+},
+{
+  "c": "Research & Judgment",
+  "src": "world",
+  "q": "What if the title is misleading but specifications appear correct?",
+  "a": "I would separate the title issue from the attribute issue and validate both against the product evidence and content rules. I would determine the permitted correction under the SOP, correct or recommend the title change, and check whether the wording creates a wider customer-impacting issue.",
+  "ex": "Example: If a product title says 'waterproof' but the manufacturer only says 'water-resistant,' I would not preserve the stronger claim without evidence.",
+  "t": "Example: If a product title says 'waterproof' but the manufacturer only says 'water-resistant,' I would not preserve the stronger claim without evidence."
+},
+{
+  "c": "Research & Judgment",
+  "src": "extra",
+  "q": "What would you do when you cannot find enough information online?",
+  "a": "I would verify the identifier and search approved internal sources, manufacturer documentation and other permitted references. I would clearly separate known facts from assumptions. If a mandatory decision cannot be made confidently, I would use the exception/escalation path rather than inventing an attribute from a similar product.",
+  "ex": "Example: If an accessory's dimensions are unavailable, I would not copy dimensions from a visually similar item because a small difference can affect compatibility.",
+  "t": "Example: If an accessory's dimensions are unavailable, I would not copy dimensions from a visually similar item because a small difference can affect compatibility."
+},
+{
+  "c": "Operations & Escalation",
+  "src": "world",
+  "q": "When should you escalate a catalog issue instead of fixing it yourself?",
+  "a": "I would escalate when the SOP does not cover the case, evidence conflicts, the issue has significant customer/business impact, the decision requires approval outside my scope, or the change could affect a broader catalog relationship. I would include the identifier, evidence, checks already performed and the exact decision needed.",
+  "ex": "Example: If a sensitive category decision is ambiguous under the current guidance, I would not guess; I would escalate with the supporting evidence.",
+  "t": "Example: If a sensitive category decision is ambiguous under the current guidance, I would not guess; I would escalate with the supporting evidence."
+},
+{
+  "c": "Operations & Escalation",
+  "src": "extra",
+  "q": "How would you handle a seller who disagrees with a catalog correction?",
+  "a": "I would stay neutral and focus on evidence and policy. I would review the seller's claim, verify the product identity and sources, and check the applicable rules. If stronger evidence supports a change, I would follow the approved reconsideration path; otherwise I would document the decision and escalate when required.",
+  "ex": "Example: If a seller says a laptop has 2 TB but the manufacturer page for the exact model says 1 TB, I would rely on verified evidence and the defined process, not the seller's assertion alone.",
+  "t": "Example: If a seller says a laptop has 2 TB but the manufacturer page for the exact model says 1 TB, I would rely on verified evidence and the defined process, not the seller's assertion alone."
+},
+{
+  "c": "Operations & Escalation",
+  "src": "world",
+  "q": "What would you do if a customer complaint points to a catalog error?",
+  "a": "I would identify the affected product/listing, verify the reported issue and correct or escalate it according to SOP. I would also check related records for the same defect and capture the pattern if it is recurring. Customer complaints can be valuable signals for finding catalog-quality gaps.",
+  "ex": "Example: If multiple customers report receiving the wrong color, I would compare the image, variation attribute and product identifiers to determine whether the root cause is catalog data, variation mapping or fulfillment.",
+  "t": "Example: If multiple customers report receiving the wrong color, I would compare the image, variation attribute and product identifiers to determine whether the root cause is catalog data, variation mapping or fulfillment."
+},
+{
+  "c": "Process & SOP",
+  "src": "world",
+  "q": "How would you learn a new SOP quickly?",
+  "a": "I would read it for context, break it into decision points, mandatory checks, exceptions and escalation rules, then study examples and practice on sample cases. I would validate my understanding with the SME/lead when needed and update my notes when the SOP changes.",
+  "ex": "Example checklist: identifier → category eligibility → mandatory attributes → source validation → variation rules → final QA.",
+  "t": "Example checklist: identifier → category eligibility → mandatory attributes → source validation → variation rules → final QA."
+},
+{
+  "c": "Process & SOP",
+  "src": "extra",
+  "q": "What if you discover that the SOP itself seems incorrect or outdated?",
+  "a": "I would follow the current approved instruction rather than silently creating my own workaround, while raising the concern through the appropriate channel with evidence. If official guidance is updated, I would adopt the new version and make sure future decisions use it.",
+  "ex": "Example: If the SOP says an attribute is mandatory but the current template no longer contains it, I would flag the mismatch instead of independently deciding that the requirement is removed.",
+  "t": "Example: If the SOP says an attribute is mandatory but the current template no longer contains it, I would flag the mismatch instead of independently deciding that the requirement is removed."
+},
+{
+  "c": "Excel & Analytics",
+  "src": "world",
+  "q": "How would you use Excel to find missing or invalid catalog attributes?",
+  "a": "I would define mandatory fields and valid values first. Then I could use filters, conditional formatting, COUNTIF/COUNTIFS, lookups and data validation to identify blanks, unexpected values and mismatches. A Pivot Table can summarize defects by category, seller, attribute or error type.",
+  "ex": "Example: For categories requiring Brand and Color, I can filter blank Brand cells, count them by category and highlight values outside an approved list.",
+  "t": "Example: For categories requiring Brand and Color, I can filter blank Brand cells, count them by category and highlight values outside an approved list."
+},
+{
+  "c": "Excel & Analytics",
+  "src": "extra",
+  "q": "What is the difference between VLOOKUP, XLOOKUP and INDEX-MATCH?",
+  "a": "VLOOKUP searches in the first column of a selected table and returns a related value from another column. XLOOKUP can search one range and return from another, including left/right lookups where supported. INDEX-MATCH is a flexible traditional combination. I would choose the simplest approved method for the Excel environment and validate the key/result.",
+  "ex": "Example: If Product ID is in column D and the return value is in column B, XLOOKUP or INDEX-MATCH can look left; standard VLOOKUP cannot directly do that without changing the range.",
+  "t": "Example: If Product ID is in column D and the return value is in column B, XLOOKUP or INDEX-MATCH can look left; standard VLOOKUP cannot directly do that without changing the range."
+},
+{
+  "c": "Excel & Analytics",
+  "src": "extra",
+  "q": "How would you check whether a lookup result is trustworthy?",
+  "a": "I would check whether the lookup key is unique, use exact matching when appropriate, identify missing matches and sample-check returned values against the source. A correct formula can still give a wrong business result if the source key is duplicated or stale.",
+  "ex": "Example: If Product ID 123 appears twice with different brands, I would investigate the duplicate before using a lookup result for a catalog decision.",
+  "t": "Example: If Product ID 123 appears twice with different brands, I would investigate the duplicate before using a lookup result for a catalog decision."
+},
+{
+  "c": "SQL & Python",
+  "src": "extra",
+  "q": "How would you write SQL to find duplicate product identifiers?",
+  "a": "I would group by the candidate identifier and count records, keeping groups where the count is greater than one: SELECT product_id, COUNT(*) FROM products GROUP BY product_id HAVING COUNT(*) > 1. Then I would inspect those records to decide whether they are true duplicates or legitimate cases such as variants.",
+  "ex": "Example: A query finds ID 5001 three times. I would compare model, color, size, status and other fields before deciding what action the SOP allows.",
+  "t": "Example: A query finds ID 5001 three times. I would compare model, color, size, status and other fields before deciding what action the SOP allows."
+},
+{
+  "c": "SQL & Python",
+  "src": "extra",
+  "q": "What is a JOIN? Give a catalog example.",
+  "a": "A JOIN combines related records from tables using a common key. For example, a products table can be joined to an audit-results table using product_id so I can analyze defect types by category or seller. I would watch for one-to-many relationships because joins can multiply rows and distort counts.",
+  "ex": "Example: Joining product attributes with audit results can show which categories have the highest defect rates.",
+  "t": "Example: Joining product attributes with audit results can show which categories have the highest defect rates."
+},
+{
+  "c": "SQL & Python",
+  "src": "extra",
+  "q": "How would Python help with catalog data cleaning?",
+  "a": "Python can make repetitive validation consistent and repeatable. With pandas, for example, I could load data, inspect nulls, normalize text, detect duplicates, validate formats, compare files and generate an exception report. I would test the logic on known cases, document assumptions and keep human review for business decisions.",
+  "ex": "Example: A script can normalize 'Apple ', 'APPLE' and 'apple' for matching, but it should not assume similarly named brands are identical without a defined rule.",
+  "t": "Example: A script can normalize 'Apple ', 'APPLE' and 'apple' for matching, but it should not assume similarly named brands are identical without a defined rule."
+},
+{
+  "c": "Behavioral & Leadership",
+  "src": "world",
+  "q": "Tell me about a time you disagreed with your manager or teammate.",
+  "a": "I would use a real example where the disagreement was about the work. I would explain the situation, present evidence, listen to the other person's reasoning and align on the final decision. If a material risk remained, I would respectfully escalate; once the decision was made, I would commit and execute professionally.",
+  "ex": "Example: If a teammate classified a product using title alone while I believed model specifications were required, I would compare both approaches with the SOP and evidence instead of arguing from opinion.",
+  "t": "Example: If a teammate classified a product using title alone while I believed model specifications were required, I would compare both approaches with the SOP and evidence instead of arguing from opinion."
+},
+{
+  "c": "Behavioral & Leadership",
+  "src": "world",
+  "q": "Tell me about a time you worked under a tight deadline.",
+  "a": "I would clarify the required output and deadline, prioritize the highest-impact work, split the task into batches, use approved tools efficiently and keep critical quality checks. If a blocker threatened delivery, I would communicate early. The result should demonstrate on-time delivery without bypassing mandatory controls.",
+  "ex": "Example: For a same-day dataset deadline, I could divide work into required-field checks, duplicate checks and final sampling while tracking completed versus pending rows.",
+  "t": "Example: For a same-day dataset deadline, I could divide work into required-field checks, duplicate checks and final sampling while tracking completed versus pending rows."
+},
+{
+  "c": "Behavioral & Leadership",
+  "src": "world",
+  "q": "Tell me about a time you improved a process.",
+  "a": "I would describe a repetitive or error-prone process, identify the problem, propose a change, test it, collect feedback and implement it through the appropriate approval process. I would quantify the benefit where possible: fewer errors, less rework or faster processing.",
+  "ex": "Example: A standardized spreadsheet template with required columns and validation rules can reduce inconsistent submissions and make reporting easier.",
+  "t": "Example: A standardized spreadsheet template with required columns and validation rules can reduce inconsistent submissions and make reporting easier."
+},
+{
+  "c": "Behavioral & Leadership",
+  "src": "world",
+  "q": "Tell me about a time you used data to make a decision.",
+  "a": "I would explain the decision, the data collected, the analysis, the conclusion and what happened afterward. I would state assumptions or limitations and connect the outcome to quality, efficiency, customer impact or another measurable result.",
+  "ex": "Example: If one attribute produces most errors in a project dataset, comparing error counts by field can show where a targeted fix will have the largest impact.",
+  "t": "Example: If one attribute produces most errors in a project dataset, comparing error counts by field can show where a targeted fix will have the largest impact."
+},
+{
+  "c": "Behavioral & Leadership",
+  "src": "world",
+  "q": "How do you handle repetitive work without losing attention to detail?",
+  "a": "I use a consistent workflow, checklist and quality checkpoints. I use approved filters or automation to reduce unnecessary manual effort and track recurring errors so the work remains analytical rather than mindless copying. I balance productivity with accuracy by reviewing batches before moving forward.",
+  "ex": "Example: After every 100 records, I can reconcile counts and sample-check completed records instead of waiting until the end to discover a systematic error.",
+  "t": "Example: After every 100 records, I can reconcile counts and sample-check completed records instead of waiting until the end to discover a systematic error."
+},
+{
+  "c": "Behavioral & Leadership",
+  "src": "world",
+  "q": "What does Bias for Action mean in a Catalog Specialist role?",
+  "a": "It means acting promptly when action is appropriate while still respecting quality and compliance controls. For a customer-impacting issue, I would investigate quickly, use available evidence and take the approved correction or escalation path. Bias for Action does not mean guessing or bypassing mandatory SOP steps.",
+  "ex": "Example: When a major listing error is reported, I would immediately verify the affected record and route it through the correct process rather than leaving it uninvestigated.",
+  "t": "Example: When a major listing error is reported, I would immediately verify the affected record and route it through the correct process rather than leaving it uninvestigated."
+},
+{
+  "c": "Behavioral & Leadership",
+  "src": "world",
+  "q": "What does Insist on the Highest Standards mean for catalog quality?",
+  "a": "It means not accepting avoidable inaccuracies just because the workload is high. I would use the defined quality standard, investigate recurring defects and raise process gaps. I would also improve efficiency so high standards remain sustainable at scale.",
+  "ex": "Example: If an audit batch has an unusually high error rate, I would identify the pattern and root cause rather than simply finishing it and repeating the same problem tomorrow.",
+  "t": "Example: If an audit batch has an unusually high error rate, I would identify the pattern and root cause rather than simply finishing it and repeating the same problem tomorrow."
+},
+{
+  "c": "Communication",
+  "src": "world",
+  "q": "How would you communicate an audit result to a stakeholder?",
+  "a": "I would keep the message concise and evidence-based: what was audited, key finding, impact, examples, recommended action and any decision/owner needed. I would quantify the issue where possible and separate confirmed facts from open questions.",
+  "ex": "Example: 'We audited 2,000 items; 120 had missing Color values, and 70% of those came from one source template. I recommend validating the template before the next feed.'",
+  "t": "Example: 'We audited 2,000 items; 120 had missing Color values, and 70% of those came from one source template. I recommend validating the template before the next feed.'"
+},
+{
+  "c": "Sensitive Content & Judgment",
+  "src": "world",
+  "q": "How would you handle sensitive product content such as alcohol, tobacco, weapons or adult content?",
+  "a": "I would remain professional and objective and follow the applicable policy and SOP exactly. I would not use personal opinions to make the decision. If the case is sensitive or unclear, I would use the designated escalation path and document the evidence and policy basis required by the workflow.",
+  "ex": "Example: If a sensitive listing is ambiguous, I would check the current policy and escalate when the guidance does not clearly determine the outcome.",
+  "t": "Example: If a sensitive listing is ambiguous, I would check the current policy and escalate when the guidance does not clearly determine the outcome."
+},
+{
+  "c": "Customer Experience",
+  "src": "world",
+  "q": "Why is catalog accuracy important to Amazon customers?",
+  "a": "Customers rely on titles, images, price, dimensions, compatibility and other attributes to decide what to buy. Incorrect information can cause confusion, poor purchase decisions, returns and loss of trust. A Catalog Specialist reduces that friction by making information accurate, consistent and useful.",
+  "ex": "Example: If a laptop is listed as 512 GB but is actually 256 GB, a customer may buy the wrong product. Correcting the catalog prevents an avoidable poor experience.",
+  "t": "Example: If a laptop is listed as 512 GB but is actually 256 GB, a customer may buy the wrong product. Correcting the catalog prevents an avoidable poor experience."
+},
+{
+  "c": "Operational Excellence",
+  "src": "extra",
+  "q": "If productivity and quality targets conflict, what would you do?",
+  "a": "I would confirm the metric definitions and required thresholds first. I would follow mandatory quality controls and look for process improvements that increase speed without reducing accuracy. If the conflict comes from capacity, unclear priorities or a process problem, I would raise it with data and propose options. I would never intentionally reduce quality to make productivity look better.",
+  "ex": "Example: If rushing increases rework, the apparent speed gain may be false. I would show the rework impact and recommend better batching or validation.",
+  "t": "Example: If rushing increases rework, the apparent speed gain may be false. I would show the rework impact and recommend better batching or validation."
+},
+{
+  "c": "Operational Excellence",
+  "src": "extra",
+  "q": "How would you create an executive summary from catalog audit data?",
+  "a": "I would focus on the few numbers that explain process health: volume, defect rate, trend versus prior period, top defect types, highest-impact categories/sources and recommended actions. I would use a simple chart or Pivot-based summary when it improves understanding, and every number should be traceable to the underlying data.",
+  "ex": "Example: Instead of 20,000 rows, present 20K audited, 3.2% defect rate, top two defects = 68% of defects, one source = 55%, recommended action = template validation.",
+  "t": "Example: Instead of 20,000 rows, present 20K audited, 3.2% defect rate, top two defects = 68% of defects, one source = 55%, recommended action = template validation."
+},
 
-/* ---------- Role & Technical ---------- */
-{c:"Role & Technical",src:"real",q:"Explain the role of a Catalog Specialist in your own words.",
-a:`"A Catalog Specialist manages the product information customers see on Amazon — titles, descriptions, images, prices, brands and categories. The job is to create new listings, fix errors, remove duplicates, and make sure every product follows Amazon's style guidelines. If catalog data is wrong, customers buy the wrong product, return it, and lose trust — so this role directly protects the customer experience and the seller's business."`,
-t:"An interviewer will reject anyone who can't explain the job they applied for. Practice until it flows naturally."},
-{c:"Role & Technical",src:"real",q:"How would you handle discrepancies in product listings?",
-a:`"First, identify exactly what's mismatched — say the title says 500ml but the image shows 1 litre. Second, verify the correct info from a trusted source: manufacturer data, the seller's original input, or the SOP. Third, correct the listing per the style guide. Finally, check whether the same error exists in similar listings so the root cause is fixed, not just one product. If unsure, I escalate to my lead instead of guessing."`,
-t:"The candidate who cleared broke the problem into steps and used data to verify — copy that structure."},
-{c:"Role & Technical",src:"real",q:"A product has incorrect attributes and is causing customer complaints. How would you rectify it?",
-a:`"Complaints mean customers are being hurt right now — Customer Obsession makes this top priority. I'd verify the correct attributes from reliable sources, correct the listing immediately so no new customer is misled, then check the complaint history to confirm my fix solves the exact confusion. Last, I'd flag it to the team to check whether other products from the same seller carry the same error."`},
-{c:"Role & Technical",src:"real",q:"How would you categorize a product with ambiguous details?",
-a:`"Gather every clue — images, brand, similar catalog products, the seller's description. Compare with how similar items are categorized and follow the category style guide. If it genuinely fits two categories, choose the one where customers are most likely to search, because the catalog exists for the customer. If the ambiguity is serious, raise it to my lead with my recommendation rather than silently guessing."`},
-{c:"Role & Technical",src:"real",q:"What tools or software are you familiar with for catalog management?",
-a:`"I'm strong in MS Excel — sorting, filtering, removing duplicates, VLOOKUP and pivot tables, the core tools for checking and cleaning product data. I also understand basic SQL — SELECT, WHERE and JOIN — for pulling data from tables. I haven't used Amazon's internal catalog tools yet, but I learn software quickly, and they're built on the same data-checking logic."`,
-t:"Candidates who cleared mentioned Excel + basic SQL. Expect the follow-up: 'explain how VLOOKUP works' — see the Extra question below."},
-{c:"Role & Technical",src:"extra",q:"Follow-up: Explain how VLOOKUP works.",
-a:`"VLOOKUP searches for a value in the first column of a table and returns a value from another column in the same row. Formula: =VLOOKUP(lookup_value, table_range, column_number, FALSE). Example: if Sheet1 has product IDs and Sheet2 has IDs with prices, VLOOKUP can pull the correct price for each ID automatically — instead of matching thousands of rows by hand. FALSE means exact match, which is what catalog work needs."`,
-t:"A Glassdoor candidate said VLOOKUP knowledge was the key technical check. Practice it live in Excel before the interview."},
-{c:"Role & Technical",src:"real",q:"Describe a time you had to work with large datasets / a large amount of data.",
-a:`STAR (fresher example): "In my final-year project I collected survey data from 400+ students in Excel. The raw data had spelling differences, duplicates and blanks. I cleaned it with filters and remove-duplicates, standardized entries, and used pivot tables to summarize. It taught me that with large data, a systematic process matters more than speed — clean first, analyze second."`,
-t:"Replace with YOUR real example: college project, internship, shop billing, society records — anything true."},
-{c:"Role & Technical",src:"real",q:"How do you ensure accuracy in your work?",
-a:`"Three habits. One: follow the SOP or checklist exactly, never memory. Two: a quick self-review before submitting — especially numbers, spellings and units, where errors hide. Three: when I find an error, I ask why it happened and adjust my process so it never repeats. Accuracy isn't about being slow — it's a fixed checking habit."`},
-{c:"Role & Technical",src:"real",q:"Explain a situation where you improved a process related to data handling.",
-a:`"At our college fest, registrations were written on paper and typed later — duplicates and missing entries everywhere. I created a Google Form linked to a sheet, with dropdowns instead of free typing. Entry errors dropped almost to zero and the team saved hours daily. Lesson: most data errors come from the process, not the person — fix the process and accuracy follows."`},
-{c:"Role & Technical",src:"extra",q:"What is Amazon's business model? What do you know about e-commerce?",
-a:`"Amazon is a marketplace: it sells products itself and also lets millions of third-party sellers list on its platform. The model runs on customer trust — fast delivery, easy returns, accurate product information. That's exactly where the catalog team fits: every listing a customer sees is the catalog team's responsibility. Amazon also earns from Prime subscriptions, advertising and AWS cloud services."`},
-{c:"Role & Technical",src:"world",q:"How do you ensure product data and images stay accurate and consistent across multiple e-commerce platforms?",
-a:`"With a single source of truth. I'd maintain one master sheet or system holding the verified title, attributes, images and price for each product, and every platform listing gets updated only from that master — never edited independently. Then regular audits: export listings from each platform, compare against the master with VLOOKUP or match formulas, and fix mismatches in batches. Consistency fails when people edit in five places; it succeeds when everything flows from one verified source."`,
-t:"From recruiter question banks used worldwide for catalog hiring — the 'single source of truth' idea is the answer they want to hear."},
-{c:"Role & Technical",src:"world",q:"What strategies would you use to optimize product content for better visibility and sales?",
-a:`"Three levers. Titles: include the words customers actually search — brand, product type, key spec, size — within the character limit. Content: clear bullet points answering buyer doubts (material, dimensions, compatibility, warranty) plus high-quality images from multiple angles. Keywords: fill backend search terms with relevant synonyms customers might type, like 'earphones' and 'headphones'. Better content means the product appears in more searches and converts more visitors — accurate data is not just correctness, it's sales."`,
-t:"Based on the winning answer in ZipRecruiter's global guide: descriptions + titles + keywords driven by how customers actually search."},
-{c:"Role & Technical",src:"world",q:"What is SEO and why does it matter for a product listing?",
-a:`"SEO — search engine optimization — means writing content so it appears when people search. For listings it matters twice: inside Amazon, the search algorithm ranks products using the words in titles, bullets and backend keywords; outside, Google can send shoppers straight to a product page. A perfect product with a poorly-written listing is invisible. So a Catalog Specialist's word choices directly affect how many customers ever see the product."`},
+{
+  "c": "Logical Reasoning",
+  "src": "real",
+  "q": "A cake has to be divided into 8 equal pieces using only 3 straight cuts. How would you do it?",
+  "a": "I would use the three cuts in two dimensions. First, make two straight cuts vertically across the cake at right angles to each other, creating 4 pieces. Then make the third cut horizontally through the middle of the cake. The 4 vertical sections are split into two layers, giving 8 pieces. The key is not to make all three cuts from the top.",
+  "ex": "Catalog connection: The same thinking applies when you have to split a large catalog problem into independent dimensions—for example, first segment by category, then by defect type, then by seller/source. Instead of trying to solve everything at once, I break the problem into structured parts.",
+  "t": "This type of cake-cutting puzzle has been reported in Amazon Catalog Associate interviews; candidate reports also mention logical/basic aptitude questions."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "You have 100 product records. 20 have missing Brand, 15 have missing Color, and 5 have both missing. How many records have at least one missing attribute?",
+  "a": "Use the inclusion-exclusion rule: records with at least one issue = Brand missing + Color missing − both missing. So, 20 + 15 − 5 = 30 records. I would therefore say 30 unique records need attention. The important logical step is subtracting the 5 records that were counted in both groups.",
+  "ex": "Catalog connection: If I simply add the two defect queues, I would incorrectly report 35 records. In an audit report, that could inflate the defect volume and lead to incorrect prioritization.",
+  "t": "Whenever two defect conditions can overlap, check whether you are counting records or occurrences."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "A catalog team processes 240 records in 6 hours. At the same rate, how many records can it process in 8 hours?",
+  "a": "First calculate the hourly rate: 240 ÷ 6 = 40 records per hour. Then for 8 hours: 40 × 8 = 320 records. I would also mention that this assumes the same productivity rate, no major blockers, and that quality checks remain unchanged.",
+  "ex": "Catalog connection: If the daily queue is 320 records and the team has 8 productive hours, the simple planning estimate is 40 records/hour. If quality review or system downtime reduces productive hours, I would revise the estimate rather than blindly commit to 320.",
+  "t": "State assumptions in operational math questions."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "You have 3 product files: File A has 1,000 rows, File B has 800 rows, and File C has 500 rows. After removing 100 exact duplicates between A and B and 50 between B and C, how many rows remain if there are no other overlaps?",
+  "a": "Start with the total: 1,000 + 800 + 500 = 2,300 rows. Remove 100 duplicate rows between A and B and 50 between B and C: 2,300 − 100 − 50 = 2,150 unique rows. I would first confirm that the duplicate groups do not overlap across both comparisons; the question says there are no other overlaps, so 2,150 is the answer.",
+  "ex": "Catalog connection: During catalog consolidation, I would not delete records just because titles look similar. I would validate the duplicate key and business rules before treating two records as the same product.",
+  "t": "Check whether duplicate counts are mutually exclusive before simply subtracting them."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "A product has 5 attributes. Four are verified from an approved manufacturer source, but one conflicts with the seller-provided value. Which value should you use?",
+  "a": "I would not decide only because four fields agree. I would identify the specific conflicting attribute, check the applicable SOP and determine which source is authoritative for that attribute. If the manufacturer source is the approved source under the rule, I would use it and document the evidence. If the SOP does not specify precedence, I would escalate the ambiguity rather than assume.",
+  "ex": "Example: Seller says a laptop has 16 GB RAM, while the approved manufacturer specification says 8 GB. I would verify the exact model/part number first, then follow source-precedence guidance before changing the catalog.",
+  "t": "This tests judgment: the correct answer depends on evidence and the defined source hierarchy, not majority voting."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "Four products have the following defect counts: A=12, B=7, C=19, D=5. If you can investigate only two first, which two should you choose?",
+  "a": "Based only on defect count, I would investigate C and A because they have the highest counts: 19 and 12. But in a real operation I would also check severity, customer impact, SLA and whether the defects are concentrated in high-risk attributes. If B had a safety-critical defect while C had formatting issues, severity could change the priority.",
+  "ex": "Catalog connection: Defect volume is one signal; a Catalog Specialist should combine volume with impact and urgency instead of automatically choosing the largest number.",
+  "t": "Say your decision rule explicitly before selecting the answer."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "A queue contains 50 tasks. 30 are routine, 15 are high priority, and 5 are blocked waiting for information. What should you work on first?",
+  "a": "I would start with the high-priority tasks that are actionable, while checking the blocked tasks to see whether I can request the missing information in parallel. I would not spend productive processing time on blocked work if I cannot move it forward. After high-priority tasks, I would process routine work based on SLA and dependencies.",
+  "ex": "Example: If 15 high-priority catalog corrections have complete evidence and 5 cases are waiting for seller clarification, I can work the 15 while simultaneously raising the clarification requests for the blocked cases.",
+  "t": "Good prioritization includes parallel actions; not every task has to be handled sequentially."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "A product title contains 10 words. The same word appears 3 times. If duplicate words are counted only once, how many distinct word positions remain after removing the two extra occurrences?",
+  "a": "The original title has 10 word positions. One word is repeated 3 times, so two occurrences are extra if we want to keep one occurrence. Therefore 10 − 2 = 8 positions remain. In actual catalog content, however, I would not automatically remove repeated words because repetition can sometimes be intentional or required by a content rule; I would apply the relevant guideline.",
+  "ex": "Catalog connection: Logical cleanup is different from blindly editing content. A repeated model term or important attribute may be valid, so I would validate against the content policy before changing it.",
+  "t": "The interview may be testing whether you notice the distinction between mathematical simplification and a real business decision."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "You find 10,000 catalog records and 2% have an error. Approximately how many records contain errors?",
+  "a": "2% means 2 out of every 100 records. So 10,000 × 2 ÷ 100 = 200 records. I would report approximately 200 error records, assuming the 2% rate is accurate and applies to the full population.",
+  "ex": "Catalog connection: If an audit finds a 2% defect rate in 10,000 records, the estimated defect volume is 200. That number can help quantify workload and support prioritization or root-cause analysis.",
+  "t": "For percentage questions, convert the percentage to a decimal or divide by 100."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "A product is listed as Red in one place, Crimson in another, and Maroon in a third. What is the logical next step?",
+  "a": "I would not choose the most common word automatically. I would determine whether these are approved values or whether they represent different shades under the category's attribute standard. Then I would verify the product images/manufacturer information and apply the catalog's controlled vocabulary or classification rule. If the evidence cannot distinguish them, I would escalate.",
+  "ex": "Example: For a clothing item, ‘crimson’ and ‘maroon’ may both describe a dark red shade. The correct catalog value should come from the approved color taxonomy, not personal preference.",
+  "t": "Look for controlled vocabulary and source evidence before normalizing values."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "You have two identical-looking listings, but one has model number X100 and the other X100-B. Are they duplicates?",
+  "a": "Not necessarily. I would treat them as potential duplicates and investigate the model numbers, UPC/GTIN, manufacturer page, pack size, region, color, configuration and other defining attributes. A suffix can represent a legitimate variant or bundle. I would only classify them as duplicates when the approved identity rules and evidence support that conclusion.",
+  "ex": "Catalog connection: Two phone listings can look identical but one may be 128 GB and another 256 GB. Similar titles/images do not prove they are the same product.",
+  "t": "Never merge similar products based on appearance alone."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "An audit sample has 100 records. You find 6 errors. What is the defect rate? If the next 400 records have the same rate, how many errors would you expect?",
+  "a": "The observed defect rate is 6 ÷ 100 = 6%. At the same rate, 400 × 6% = 24 expected errors. So the combined sample of 500 records would be expected to have about 30 errors if the same rate continues. This is an estimate, not a guarantee.",
+  "ex": "Catalog connection: A 6% audit defect rate can be used to estimate workload, but I would avoid presenting an estimate as an exact forecast without enough evidence.",
+  "t": "Distinguish observed results from projections."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "Five products are in a review queue. P must be reviewed before Q. R must be reviewed after S. T can be reviewed anytime. Give one valid order.",
+  "a": "One valid order is P, Q, S, R, T. P is before Q, and S is before R, so both constraints are satisfied. T can be anywhere. The key is to identify constraints first and then construct an order that satisfies all of them.",
+  "ex": "Catalog connection: In a bulk correction workflow, some tasks may depend on upstream validation. I would identify those dependencies before deciding the processing sequence.",
+  "t": "For ordering puzzles, write down the ‘must come before’ constraints first."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "A team has 4 hours to review 160 records. After the first hour, only 30 records are complete. Can the team still finish on time if the remaining rate becomes constant?",
+  "a": "The team completed 30 in the first hour, leaving 130 records for 3 hours. Required rate = 130 ÷ 3 ≈ 43.33 records/hour. So yes, it is possible only if the team can sustain at least about 44 records per hour for the remaining three hours without reducing required quality. I would monitor quality while increasing pace.",
+  "ex": "Catalog connection: This is a productivity/SLA decision. I would not simply rush; I would identify why the first hour was slow and remove the bottleneck if possible.",
+  "t": "Use remaining workload ÷ remaining time to calculate the required recovery rate."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "A seller provides 4 sources for a product: one official manufacturer page, two reseller pages, and one customer review. Which source would you prioritize for factual verification?",
+  "a": "I would generally prioritize the official manufacturer source for factual product specifications, provided it matches the exact product/model and is an approved source under the workflow. Reseller pages can be useful for cross-checking, while customer reviews are usually not the strongest source for authoritative specifications. If sources conflict, I would follow the approved source hierarchy and SOP.",
+  "ex": "Example: If the manufacturer page says the product weighs 1.2 kg and a reseller says 1.5 kg, I would verify the exact model and use the authoritative source according to the process rather than averaging the two.",
+  "t": "Source quality matters more than the number of sources agreeing."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "If every corrected record requires a second quality check, and one reviewer can check 25 records per hour, how long will 100 corrected records take for QA?",
+  "a": "At 25 records per hour, 100 ÷ 25 = 4 hours. I would say the estimated QA time is 4 productive hours, assuming no interruptions, equal complexity and the same review rate. If some records are complex exceptions, the actual time could be higher.",
+  "ex": "Catalog connection: This helps capacity planning. If a correction batch contains 100 records, QA effort must be included in the delivery estimate rather than treating correction time as the entire workload.",
+  "t": "Capacity estimates should distinguish productive time from calendar time."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "You have three boxes labeled Electronics, Home, and Fashion, but you know all three labels are wrong. You may inspect one item from one box. How can you relabel all three boxes?",
+  "a": "Pick one item from the box labeled Electronics, because its label is known to be wrong. Suppose the item is Fashion. Relabel that box Fashion. The box labeled Home cannot be Home because all labels are wrong, and it cannot be Fashion because Fashion has already been identified, so it must be Electronics. The remaining box is Home. This uses the ‘all labels are wrong’ constraint to infer the other two.",
+  "ex": "Catalog connection: The same principle applies to data-quality problems: one verified observation plus strong constraints can allow you to infer other states—but only when the constraints are explicitly valid.",
+  "t": "Do not use an inference unless the question gives you the constraint that makes the inference valid."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "A catalog error appears in 4% of records from Source A and 1% from Source B. Source A contributes 1,000 records and Source B contributes 4,000. Which source contributes more errors by count?",
+  "a": "Source A: 1,000 × 4% = 40 errors. Source B: 4,000 × 1% = 40 errors. So both contribute approximately 40 errors by count, even though Source A has the higher defect rate. This shows why both rate and volume matter.",
+  "ex": "Catalog connection: If I recommend a process fix, I would consider whether the goal is reducing the rate at Source A or reducing the largest absolute error volume. The right action depends on business impact.",
+  "t": "A higher percentage does not always mean a higher number of defects."
+},
+{
+  "c": "Logical Reasoning",
+  "src": "extra",
+  "q": "A customer reports that a product has the wrong color, but the title, bullet, image and manufacturer page disagree. What should you do first?",
+  "a": "First I would identify the exact product and attribute, then collect the conflicting evidence. I would check the approved source hierarchy, exact model/variant and the relevant SOP before deciding. I would not change the color based only on the customer's statement or the image. Once the correct value is established, I would correct or escalate according to process and check whether related listings have the same issue.",
+  "ex": "Catalog connection: This combines logical reasoning with catalog judgment: identify the evidence, test whether the evidence refers to the same variant, apply the rule, then act.",
+  "t": "The first step is evidence gathering—not immediately editing the listing."
+}
 
-/* ---------- Scenarios & Behavioral ---------- */
-{c:"Scenarios & STAR",src:"real",q:"How do you prioritize tasks when dealing with multiple catalog issues or a high volume of updates?",
-a:`"By customer impact first. An error live right now, misleading customers, beats any internal backlog task. Within that, I sort urgent-and-important first, then schedule important-but-not-urgent. If two deadlines truly clash, I inform my lead early so expectations are clear. I'd rather finish one task fully and accurately than juggle five half-done."`,
-t:"Asked in India AND on Glassdoor worldwide ('high volume of catalog updates'). The urgency–importance sorting is what cleared candidates used."},
-{c:"Scenarios & STAR",src:"real",q:"How would you handle a tight deadline? / How do you manage time under pressure?",
-a:`STAR: "Situation: my final-semester project was preponed by a week, during exams. Task: finish my data-analysis portion without dropping quality. Action: I broke it into daily 2-hour blocks, did the hardest part first each morning, and told my group my plan early so nobody was surprised. Result: submitted a day early, scored an A. Under pressure, a written plan and early communication beat panic every time."`},
-{c:"Scenarios & STAR",src:"real",q:"Describe a conflict at work / a difficult team member and how you resolved it.",
-a:`STAR: "Situation: in a group project one teammate kept missing deadlines; others wanted to complain to the professor. Task: as coordinator, get the work done without breaking the team. Action: I spoke to him privately first — he was stuck on a part he didn't understand. I redistributed tasks by strengths and set small twice-weekly check-ins. Result: he delivered well and we finished on time. Lesson: understand the reason behind a problem before judging the person."`,
-t:"The cleared candidate focused on the resolution, never the blame. Do the same."},
-{c:"Scenarios & STAR",src:"real",q:"Tell me about a time you faced a challenge and how you overcame it.",
-a:`STAR: "Situation: during a college event I got a data-entry task of 2,000 records with 3 days, and the source files were all in different formats. Task: standardize and enter everything accurately on time. Action: instead of starting blindly, I spent 2 hours building one template and converting all files into it; then entry became fast and uniform. I verified in batches of 100 instead of at the end. Result: finished half a day early, near-zero corrections. Time spent organizing first is never wasted."`},
-{c:"Scenarios & STAR",src:"real",q:"Describe a time you received constructive criticism. How did you handle it?",
-a:`"My professor told me my project report was accurate but too long — good work hidden in too many words. It stung at first, but I asked him for one example page, understood the point, and rewrote it to half the length. He later used it as a sample for juniors. Since then I treat feedback as free coaching — I ask clarifying questions instead of defending myself."`},
-{c:"Scenarios & STAR",src:"real",q:"Describe a situation where you demonstrated leadership.",
-a:`STAR: "Situation: our department fest team lost its coordinator two weeks before the event. Task: 10 volunteers needed organizing; I stepped up. Action: I listed all pending tasks, assigned by strength, created a group for daily 5-minute updates, and personally took the hardest task — sponsor follow-ups. Result: the event ran on schedule and we gained two new sponsors. To me, leadership means taking ownership and making others' work easier — not giving orders."`},
-{c:"Scenarios & STAR",src:"real",q:"Describe a situation you faced that best reflects one of Amazon's Leadership Principles.",
-a:`"I'll pick Ownership. In our college society, nobody 'owned' the accounts register and receipts kept going missing. Though it wasn't my role, I volunteered, built a simple Excel tracker, photographed every receipt, and presented monthly summaries. By year-end, accounts were audit-ready for the first time. Ownership means acting like it's your company — never saying 'that's not my job'."`,
-t:"Reported on Glassdoor. Prepare ONE story per principle: Customer Obsession, Ownership, Dive Deep, Deliver Results — 45 seconds each."},
-{c:"Scenarios & STAR",src:"world",q:"Describe a time you identified a gap in a product catalog. What did you do?",
-a:`"In my college e-commerce project, I noticed our sample store had detailed listings for phones but electronics accessories had no size or compatibility info — the exact details buyers ask about. I created a required-attributes checklist per category and updated 40 listings against it. In a real catalog role I'd do the same: audit by category, define the mandatory attribute set, find listings missing it, and fill the gaps in priority order of sales volume."`,
-t:"From recruiter question banks worldwide. If you have no real example, describe the METHOD — audit → checklist → fill gaps by priority."},
-{c:"Scenarios & STAR",src:"world",q:"How do you collaborate with other departments (marketing, sales, customer service) so the catalog supports business goals?",
-a:`"The catalog is used by everyone, so I'd keep two-way communication. From customer service: which listings generate complaints or returns — those get fixed first. From marketing/sales: which products are in upcoming campaigns — their listings get audited before traffic arrives. And I'd share back a simple report of common data issues so teams stop them at the source. A catalog specialist who works alone fixes errors; one who collaborates prevents them."`},
-{c:"Scenarios & STAR",src:"world",q:"Describe a time you led or managed a catalog update project with deadlines.",
-a:`"As a fresher I'll share a comparable project: digitizing our library's 800-book register in two weeks with three volunteers. I split the work by rack, created one shared sheet with fixed columns so all entries matched, set a daily target of 60 books each, and did a nightly spot-check of 10% of entries. We finished two days early with under 1% errors. The same method scales to catalog updates: one template, clear daily targets, and continuous quality checks — not one big check at the end."`},
-
-/* ---------- Puzzles ---------- */
-{c:"Puzzles",src:"real",q:"How would you organize a library of books with no titles or categories?",
-a:`"I'd choose sorting criteria I CAN observe: size, cover type, language of the text, subject guessed by skimming pages, condition. Practically, two passes — rough sort by language and subject, then finer sorting within groups. I could also build my own tagging system: a code sticker on each book plus a register, so the 'catalog' is created by me even though the books came without one. Trade-off: skimming is accurate but slow; sorting by appearance is fast but rough — I'd combine both based on how urgently the library is needed."`,
-t:"Secretly a catalog question! The interviewer watches whether you naturally think like a cataloger: create metadata, standardize, tag. The cleared candidate gave multiple solutions with pros and cons."},
-{c:"Puzzles",src:"real",q:"Estimate how many tennis balls fit in a car.",
-a:`"Step by step: car interior ≈ 4m × 1.5m × 1m = 6 cubic meters; seats and dashboard eat space, so usable ≈ 3–4 m³. A tennis ball is ~6.5cm across ≈ 0.00014 m³, and balls pack at ~70% efficiency. So 3.5 ÷ 0.00014 × 0.7 ≈ roughly 17,000–18,000 balls. The exact number doesn't matter — the method does: total volume, minus obstacles, divided by unit volume, adjusted for packing."`,
-t:"Golden rule from cleared candidates: think ALOUD. They grade your approach, not your arithmetic."},
-{c:"Puzzles",src:"real",q:"Cut a cake into 8 equal pieces with only 3 cuts.",
-a:`"Two vertical cuts in a plus (+) shape give 4 pieces. The third cut goes horizontally through the middle of the cake's height, splitting all 4 pieces into top and bottom halves — 8 equal pieces, 3 cuts."`},
-{c:"Puzzles",src:"real",q:"How would you approach a problem where the data provided is incomplete?",
-a:`"First, ask clarifying questions — often the data exists but wasn't shared. If it truly isn't available, make reasonable assumptions, state them clearly, and solve based on them, marking the answer as 'subject to these assumptions'. Then flag which missing data would most change the result, so it gets collected first. What I'd never do: silently guess and present it as fact."`},
-
-/* ---------- Leadership Principles quick cards ---------- */
-{c:"Leadership Principles",src:"extra",q:"What is Customer Obsession, in simple words? Give an example answer.",
-a:`"Every decision starts from what's best for the customer, then works backwards. Catalog example: 'If I find a wrong product image, I don't wait for my queue — a customer could order the wrong item today. I fix or escalate it immediately, because the customer's trust matters more than my task list.'"`,
-t:"This principle hides inside complaint-scenario questions and 'why does catalog accuracy matter?'"},
-{c:"Leadership Principles",src:"extra",q:"What is Ownership? Give an example answer.",
-a:`"Acting like it's your own company — never saying 'not my job', and thinking long-term, not just today's target. Example line for interviews: 'When our fest team lost its coordinator, I took over the volunteer roster even though nobody asked me to, because the event mattered more than my role description.'"`},
-{c:"Leadership Principles",src:"extra",q:"What is Dive Deep? Give an example answer.",
-a:`"Leaders check the details themselves and don't accept surface-level answers. Catalog example: 'If a listing error appears twice, I don't just fix it twice — I pull the data, find the pattern, and trace which upload or seller feed is creating it.'"`},
-{c:"Leadership Principles",src:"extra",q:"What is Deliver Results? Give an example answer.",
-a:`"Finishing on time with quality despite obstacles — inputs matter, but outcomes count. Example line: 'When my project files arrived in mixed formats with 3 days left, I didn't extend the deadline — I reorganized my method and still delivered early with near-zero errors.'"`}
-];
+];;
 
 const JAM_TOPICS=["Online shopping vs offline shopping","Social media — boon or bane","My favorite festival","Importance of the English language","Artificial intelligence in daily life","My hometown","Work from home vs office","The person I admire the most","Digital India","If I had one superpower","Importance of time management","Cricket — more than a game","My first mobile phone","Why customer service matters","One habit I want to change","E-commerce in India","My dream job","Teamwork vs individual work","Cash vs digital payments","A book or movie that changed my thinking"];
 
@@ -611,7 +1382,7 @@ function renderBank(){
     d.className='card q'+(state.learned.has(i)?' learned':'');
     d.innerHTML=`<div class="qtop">${srcBadge[item.src]}<span class="badge b-cat">${item.c}</span></div>
       <h3>${item.q}<span class="chev">▾</span></h3>
-      <div class="ans"><div class="ans-inner"><div class="star">${item.a}</div>${item.t?`<div class="tip"><b>💡 Trainer tip:</b> ${item.t}</div>`:''}
+      <div class="ans"><div class="ans-inner"><div class="star">${item.a}</div>${item.ex?`<div class="example"><b>🎯 Real-life example:</b> ${item.ex}</div>`:''}${item.t?`<div class="tip"><b>💡 Trainer tip:</b> ${item.t}</div>`:''}
       <button class="markbtn">${state.learned.has(i)?'✔ Mastered':'Mark as mastered'}</button></div></div>`;
     d.querySelector('h3').onclick=()=>d.classList.toggle('open');
     d.querySelector('.markbtn').onclick=(e)=>{e.stopPropagation();
