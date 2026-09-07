@@ -273,7 +273,10 @@ header::before{content:"";position:absolute;width:320px;height:320px;border:1px 
 .category-hero{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;margin-bottom:16px;background:linear-gradient(135deg,#fff,#f4f8fb);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
 .category-hero h2{margin-bottom:2px}
 .category-hero p{color:var(--ink-soft);font-size:.9rem}
-@media(max-width:700px){.category-hero{display:block}}
+.cat-progress{height:6px;background:#E4EAF0;border-radius:999px;overflow:hidden;margin-top:14px;max-width:280px}
+.cat-progress-fill{height:100%;background:linear-gradient(90deg,var(--tag),var(--green));border-radius:999px;transition:width .4s ease;width:0%}
+.cat-progress-label{font-size:.78rem;color:var(--ink-soft);margin-top:6px;font-weight:600}
+@media(max-width:700px){.category-hero{display:block}.cat-progress{max-width:none}}
 </style></head>
 <body>
 
@@ -408,6 +411,8 @@ header::before{content:"";position:absolute;width:320px;height:320px;border:1px 
       <div class="eyebrow">INTERVIEW QUESTION HUB</div>
       <h2 id="categoryTitle">All Questions</h2>
       <p id="categoryDesc">Pick a category below and study only the questions you need.</p>
+      <div class="cat-progress"><div class="cat-progress-fill" id="categoryProgFill" style="width:0%"></div></div>
+      <div class="cat-progress-label" id="categoryProgLabel">0 of 236 mastered in this category</div>
     </div>
     <div class="badge b-cat" id="categoryCount">236 questions</div>
   </div>
@@ -424,6 +429,7 @@ header::before{content:"";position:absolute;width:320px;height:320px;border:1px 
   </div>
   <div class="toolrow">
     <div class="search"><input id="qsearch" type="text" placeholder="Search questions… (e.g. VLOOKUP, deadline, weakness)" aria-label="Search questions"></div>
+    <button class="chip" id="btnUnmastered" type="button">📌 Not yet mastered</button>
   </div>
   <div class="chips" id="chipRow" style="margin-bottom:14px"></div>
   <div class="qcount" id="qcount"></div>
@@ -2426,20 +2432,28 @@ const store={
 const savedLearned=(store.get('cc_learned')||'').split(',').filter(x=>x!=='').map(Number);
 
 /* ============== state ============== */
-const state={learned:new Set(savedLearned),cat:"All",group:"all",search:"",good:0,bad:0,currentIdx:null};
+const state={learned:new Set(savedLearned),cat:"All",group:"all",search:"",good:0,bad:0,currentIdx:null,onlyUnmastered:false};
 function groupMatch(item){
   if(state.group==="all") return true;
   return (CATEGORY_GROUPS[state.group]||[]).includes(item.c);
 }
 function updateCategoryHero(){
   const meta=CATEGORY_TEXT[state.group]||CATEGORY_TEXT.all;
-  const total=QA.filter(groupMatch).length;
+  const idxs=QA.map((x,i)=>i).filter(i=>groupMatch(QA[i]));
+  const total=idxs.length;
+  const done=idxs.filter(i=>state.learned.has(i)).length;
+  const pct=total?Math.round(done/total*100):0;
+  const pctLabel=done>0&&pct===0?'<1':pct;
   const title=document.getElementById('categoryTitle');
   const desc=document.getElementById('categoryDesc');
   const count=document.getElementById('categoryCount');
+  const fill=document.getElementById('categoryProgFill');
+  const label=document.getElementById('categoryProgLabel');
   if(title) title.textContent=meta[0];
   if(desc) desc.textContent=meta[1];
   if(count) count.textContent=total+" question"+(total!==1?"s":"");
+  if(fill) fill.style.width=(done>0?Math.max(pct,2):0)+'%';
+  if(label) label.textContent=done+' of '+total+' mastered in this category ('+pctLabel+'%)';
 }
 
 function saveLearned(){store.set('cc_learned',[...state.learned].join(','))}
@@ -2486,6 +2500,8 @@ document.querySelectorAll('.tabbar button').forEach(btn=>{
       renderBank();
     }
     if(!samePanel)window.scrollTo({top:0,behavior:'smooth'});
+    store.set('cc_lastpanel',tabId);
+    store.set('cc_lastgroup',groupId);
   });
 });
 
@@ -2504,7 +2520,8 @@ function chipLabel(c){
 }
 function renderChips(){
   chipRow.innerHTML='';
-  cats.forEach(c=>{
+  const visibleCats=state.group==='all'?cats:["All",...(CATEGORY_GROUPS[state.group]||[])];
+  visibleCats.forEach(c=>{
     const b=document.createElement('button');
     b.className='chip'+(c===state.cat?' active':'');
     b.innerHTML=chipLabel(c);
@@ -2515,6 +2532,11 @@ function renderChips(){
 updateCategoryHero();
 renderChips();
 document.getElementById('qsearch').addEventListener('input',e=>{state.search=e.target.value.toLowerCase();renderBank();});
+document.getElementById('btnUnmastered').addEventListener('click',(e)=>{
+  state.onlyUnmastered=!state.onlyUnmastered;
+  e.currentTarget.classList.toggle('active',state.onlyUnmastered);
+  renderBank();
+});
 
 const srcBadge={real:'<span class="badge b-real">India · real</span>',world:'<span class="badge b-world">Global · real</span>',extra:'<span class="badge b-extra">Extra practice</span>',research:'<span class="badge b-research">Research · role practice</span>'};
 
@@ -2522,7 +2544,7 @@ function renderBank(){
   const list=document.getElementById('qlist');list.innerHTML='';
   let shown=0;
   QA.forEach((item,i)=>{
-    const match=groupMatch(item)&&(state.cat==="All"||item.c===state.cat)&&(item.q.toLowerCase().includes(state.search)||item.a.toLowerCase().includes(state.search));
+    const match=groupMatch(item)&&(state.cat==="All"||item.c===state.cat)&&(item.q.toLowerCase().includes(state.search)||item.a.toLowerCase().includes(state.search))&&(!state.onlyUnmastered||!state.learned.has(i));
     if(!match)return;
     shown++;
     const d=document.createElement('div');
@@ -2548,6 +2570,7 @@ function updateProgress(){
   if(pct>=80){btn.disabled=false;msg.textContent="Unlocked! You've mastered "+pct+"% — download your certificate below.";}
   else{btn.disabled=true;msg.textContent="Master at least 80% of the questions to unlock your certificate. Current: "+pct+"% ("+(Math.ceil(t*0.8)-n)+" more to go).";}
   if(typeof renderChips==='function')renderChips();
+  if(typeof updateCategoryHero==='function')updateCategoryHero();
 }
 renderBank();updateProgress();
 
@@ -2769,6 +2792,21 @@ document.getElementById('btnJamStart').onclick=()=>{
     if(s<=0){clearInterval(jamInt);clock.textContent='⏰ Time up — how did it go?';}s--;};
   tick();jamInt=setInterval(tick,1000);
 };
+
+/* ============== resume where you left off ============== */
+(function(){
+  const lastPanel=store.get('cc_lastpanel');
+  if(!lastPanel||lastPanel==='roadmap')return;
+  let btn=null;
+  if(lastPanel==='bank'){
+    const lastGroup=store.get('cc_lastgroup')||'all';
+    btn=document.querySelector('.cat-switcher button[data-group="'+lastGroup+'"]')
+      ||document.querySelector('.primary-tabbar button[data-tab="bank"]');
+  }else{
+    btn=document.querySelector('.primary-tabbar button[data-tab="'+lastPanel+'"]');
+  }
+  if(btn)btn.click();
+})();
 </script>
 
 <script id="human-answer-renderer">
